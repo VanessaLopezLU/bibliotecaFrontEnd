@@ -57,7 +57,18 @@ const routes = [{
             component: () =>
                 import('../views/dispositivo/Rol.vue'),
         },
-
+        {
+            name: 'DashboardUsuario',
+            path: '/dashboard/usuario',
+            component: () =>
+                import('../views/dispositivo/Usuario.vue'),
+        },
+        {
+            name: 'DashboardEstadoUsuario',
+            path: '/dashboard/estadousuario',
+            component: () =>
+                import('../views/dispositivo/Usuario.vue'),
+        },
 
 
 
