@@ -82,9 +82,9 @@ export default {
 
         },
         headers: [
-            { text: "id", value: "id" },
+            { text: "Id", value: "id" },
 
-            { text: "estado", value: "estado" },
+            { text: "Estado", value: "estado" },
 
             { text: 'Actions', value: 'actions', sortable: false },
 
@@ -99,7 +99,7 @@ export default {
             var vm = this;
             if (this.$refs.form.validate()) {
                 axios
-                    .post(" http://localhost:3000/estado-usuario/crear", this.paquete)
+                    .post(" http://localhost:3000/estadousuario/crear", this.paquete)
                     .then(function (response) {
 
                         alert("guardado");
@@ -119,7 +119,7 @@ export default {
         async cargar() {
             var vm = this
             await axios
-                .get("http://localhost:3000/estado-usuario/obtener")
+                .get("http://localhost:3000/estadousuario/")
                 .then(function (response) {
                     // handle success
                     vm.datos = response.data;
@@ -149,7 +149,7 @@ export default {
                         
          async deleteItem(id) {
             alert(id);
-            await axios.delete('http://localhost:3000/estado-usuario/eliminarestado/' + id).then(response => {
+            await axios.delete('http://localhost:3000/estadousuario/' + id).then(response => {
                 console.log(response.data);
                 this.cargar();
             
@@ -157,7 +157,7 @@ export default {
         },
         async editarEstado() {
             try {
-                await axios.put('http://localhost:3000/estado-usuario/actualizarestado',this.paqueteEditar).then(() => {
+                await axios.put('http://localhost:3000/estadousuario/actualizar',this.paqueteEditar).then(() => {
                 this.dialogoEditar = false;
                 this.cargar()
                 ;
