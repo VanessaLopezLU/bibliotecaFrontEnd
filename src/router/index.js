@@ -67,7 +67,7 @@ const routes = [{
             name: 'DashboardEstadoUsuario',
             path: '/dashboard/estadousuario',
             component: () =>
-                import('../views/dispositivo/Usuario.vue'),
+                import('../views/dispositivo/EstadoUsuario.vue'),
         },
 
 
