@@ -84,7 +84,7 @@ export default {
             title: "Crear",
           },
           {
-            href: "/dashboard/listardispositivo",
+            href: "",
             title: "Listar",
           },
         ],
@@ -98,13 +98,14 @@ export default {
             title: "Registro",
           },
           {
-            href: "",
-            title: "Devolucion",
+            href: "/dashboard/EstadoPrestamo",
+            title: "Estado Prestamo",
           },
           {
             href: "",
             title: "Cancelacion",
           },
+    
         ],
       },
       {

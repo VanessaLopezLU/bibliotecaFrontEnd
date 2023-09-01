@@ -25,9 +25,7 @@
 
 
                         
-                    <v-btn color="success" class="mr-8 lighten-2" @click="guardar" small>
-                        Guardar
-                    </v-btn>
+                 
 
                     <v-btn color="info" class="mr-12 lighten-2" @click="cancelar" small>
                         Cancelar
@@ -121,7 +119,7 @@ export default {
             },
             { text: "Tipo", value: "id_tipo.tipo" },
             { text: "Estado", value: "id_estado.estado" },
-            { text: 'Actions', value: 'actions', sortable: false },
+            { text: 'Actions', value: 'actions', sortable: false},
             
         ],
         datos: [],
@@ -132,7 +130,7 @@ export default {
             var vm = this;
             if (this.$refs.form.validate()) {
                 axios
-                    .post(" http://localhost:3000/equipo/crear", this.paquete)
+                    .post("http://localhost:3000/equipo/crear", this.paquete)
                     .then(function (response) {
         
                         alert("guardado");
