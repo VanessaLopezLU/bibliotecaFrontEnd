@@ -1,5 +1,5 @@
 <template>
-    <v-card class="c" max-width="500" style="background-color: #04c4ff" >
+    <v-card class="c" max-width="500" style="background-color: #07b9ee" >
         <v-row>
             <v-col>
                 <row  class="text-center ti">
