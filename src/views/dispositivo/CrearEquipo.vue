@@ -9,17 +9,24 @@
             <v-divider></v-divider>
             <v-card-text>
                 <v-form ref="form" v-model="valid" lazy-validation>
-                    <v-text-field v-model="paquete.serial" :rules="campoRules" label="Serial" required></v-text-field>
+                    <v-text-field v-model="paquete.serial" :rules="campoRules" label="Serial" required>
+
+
+                        
+                    </v-text-field>
 
                     <v-text-field v-model="paquete.descripcion" :rules="campoRules" label="Descripción"
-                        required></v-text-field>
+                        required>
+                    </v-text-field>
 
 
                      <v-select v-model="paquete.id_tipo" :items="tipoDB" item-text="tipo" item-value="id_tipo"
-                        :rules="campoRules" label="Tipo" required></v-select>
+                        :rules="campoRules" label="Tipo" required>
+                    </v-select>
 
                     <v-select v-model="paquete.id_estado" :items="estadosDb" item-text="estado" item-value="id"
-                        :rules="campoRules" label="Estado" required></v-select>
+                        :rules="campoRules" label="Estado" required>
+                    </v-select>
 
                    
 
