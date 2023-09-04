@@ -26,10 +26,10 @@
 
               <v-text-field v-model="paquete.contrasena" :rules="campoRules" label="Contrasena" required></v-text-field>
 
-              <v-select v-model="paquete.id_rol" :items="rolDb" item-text="Rol" item-value="id_rol"
+              <v-select v-model="paquete.id_rol" :items="rolDb" item-text="descripcion" item-value="id_rol"
                 :rules="campoRules" label="Rol" required></v-select>
 
-              <v-select v-model="paquete.estado" :items="estadosDb" item-text="estado" item-value="id.estado"
+              <v-select v-model="paquete.id" :items="estadosDb" item-text="estado" item-value="id"
                 :rules="campoRules" label="Estado" required></v-select>
 
               <v-btn color="success" class="mr-8 lighten-2" @click="guardar" small>
@@ -83,7 +83,7 @@ export default {
       Usuario: null,
       Contrasena: null,
       id_rol: null,
-      estado: null
+      id: null
 
     },
     rolDb:[],
@@ -136,11 +136,11 @@ export default {
     },
     async obtenerRol() {
       await axios.get('http://localhost:3000/rol/obtener').then(resp => {
-        this.rolBd = resp.data;
+        this.rolDb = resp.data;
       })
     },
     async obtenerEstado() {
-      await axios.get('http://localhost:3000/estadousuario/obtener').then(resp => {
+      await axios.get('http://localhost:3000/estadousuario').then(resp => {
         this.estadosDb = resp.data;
       })
     },
@@ -156,14 +156,14 @@ export default {
         Correo: item.Correo,
         Usuario: item.Usuario,
         Contrasena: item.Contrasena,
-        Rol: item.id.rol
+        Rol: item.id_rol.rol
       }
     },
 
     async cargar() {
       var vm = this;
       await axios
-      axios.get("http://localhost:3000/user/obtener")
+      axios.get("http://localhost:3000/user/")
       axios.then(function (response) {
         vm.datos = response.data;
         console.log(vm.datos);
@@ -200,6 +200,27 @@ export default {
 
     }
   },
+  mounted() {
+        this.cargar();
+        this.obtenerRol();
+        this.obtenerEstado();
+        
+        var vm = this;
+        axios
+            .get("http://localhost:3000/user/")
+            .then(function (response) {
+                // handle success
+                vm.datos = response.data;
+                console.log(response);
+            })
+            .catch(function (error) {
+                // handle error
+                console.log(error);
+            })
+            .finally(function () {
+                // always executed
+            });
+          }
 };
 </script>
 <style>

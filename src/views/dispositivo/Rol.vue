@@ -122,7 +122,7 @@ export default {
         async cargar() {
             var vm = this
             await axios
-                .get("http://localhost:3000/rol/")
+                .get("http://localhost:3000/rol/obtener")
                 .then(function (response) {
                     // handle success
                     vm.datos = response.data;
