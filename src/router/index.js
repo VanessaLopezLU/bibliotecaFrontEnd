@@ -67,8 +67,15 @@ const routes = [{
             name: 'DashboardEstadoUsuario',
             path: '/dashboard/estadousuario',
             component: () =>
-                import('../views/dispositivo/Usuario.vue'),
+                import('../views/dispositivo/EstadoUsuario.vue'),
+        },        {
+            name: 'DashboardEstadoPrestamo',
+            path: '/dashboard/estadoprestamo',
+            component: () =>
+                import('../views/dispositivo/EstadoPrestamo.vue'),
         },
+        
+
 
 
 

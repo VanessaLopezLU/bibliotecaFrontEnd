@@ -2,7 +2,7 @@
     <v-card class="c" max-width="500" style="background-color: #8cd3b9">
         <v-row>
             <v-col>
-                <v-card-title class="text-center ti" > Crear Estado Equipo </v-card-title>
+                <v-card-title class="text-center ti" > Estado Usuario </v-card-title>
                 <v-row class="d-flex justify-center align-center">
                     <v-img class="image" src="https://pcpcsolutions.com/images/pcmantenimiento.png"></v-img>
                 </v-row>
@@ -47,7 +47,7 @@
             <v-card>
             <v-card-text>
                 <v-form ref="formEditar"  lazy-validation>
-                    <v-text-field v-model="paqueteEditar.estadousuario" :counter="10" :rules="campoRules" label="Estado"
+                    <v-text-field v-model="paqueteEditar.estado" :counter="10" :rules="campoRules" label="Estado"
                         required></v-text-field>
 
                     <v-btn color="success" class="mr-8 lighten-2" @click="editarEstado()" small>
@@ -73,7 +73,7 @@ export default {
         campoRules: [(v) => !!v || "Campo Requerido"],
 
         paquete: {
-            estadousuario: null,
+            estado: null,
 
         },
         paqueteEditar: {
@@ -82,9 +82,9 @@ export default {
 
         },
         headers: [
-            { text: "id", value: "id" },
+            { text: "Id", value: "id" },
 
-            { text: "estado", value: "estado" },
+            { text: "Estado", value: "estado" },
 
             { text: 'Actions', value: 'actions', sortable: false },
 
@@ -99,7 +99,7 @@ export default {
             var vm = this;
             if (this.$refs.form.validate()) {
                 axios
-                    .post(" http://localhost:3000/estado-equipo/crearEstado", this.paquete)
+                    .post(" http://localhost:3000/estadousuario/crear", this.paquete)
                     .then(function (response) {
 
                         alert("guardado");
@@ -119,7 +119,7 @@ export default {
         async cargar() {
             var vm = this
             await axios
-                .get("http://localhost:3000/estado-equipo/obtenerEstado")
+                .get("http://localhost:3000/estadousuario/")
                 .then(function (response) {
                     // handle success
                     vm.datos = response.data;
@@ -149,7 +149,7 @@ export default {
                         
          async deleteItem(id) {
             alert(id);
-            await axios.delete('http://localhost:3000/estado-equipo/eliminarEstado/' + id).then(response => {
+            await axios.delete('http://localhost:3000/estadousuario/' + id).then(response => {
                 console.log(response.data);
                 this.cargar();
             
@@ -157,7 +157,7 @@ export default {
         },
         async editarEstado() {
             try {
-                await axios.put('http://localhost:3000/estado-equipo/actualizarestado',this.paqueteEditar).then(() => {
+                await axios.put('http://localhost:3000/estadousuario/actualizar',this.paqueteEditar).then(() => {
                 this.dialogoEditar = false;
                 this.cargar()
                 ;

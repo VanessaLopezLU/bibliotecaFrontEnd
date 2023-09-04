@@ -155,7 +155,7 @@
           var vm = this;
           if (this.$refs.form.validate()) {
             axios
-              .post(" http://localhost:3000/", this.paquete)
+              .post(" http://localhost:3000/user/crear", this.paquete)
               .then(function (response) {
                 // handle success
                 console.log(response);
@@ -172,15 +172,9 @@
           
         },
         async listarEstados() {
-            await axios.get('http://localhost:3000/estado-equipo/obtenerEstado').then(resp => {
+            await axios.get('http://localhost:3000/').then(resp => {
                 this.estadosDb = resp.data;
             })
-        },
-        async listarTipos() {
-            await axios.get('http://localhost:3000/tipoequipo/obtenerTipo').then(resp => {
-                this.tipoDB = resp.data;
-            })
-
         },
         editItem(item) {
             console.log(item);
@@ -198,7 +192,7 @@
         async cargar() {
             var vm = this
             await axios
-                .get("http://localhost:3000/equipo/")
+                .get("http://localhost:3000/user/obtener")
                 .then(function (response) {
                     // handle success
                     vm.datos = response.data;

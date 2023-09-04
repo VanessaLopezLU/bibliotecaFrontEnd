@@ -1,13 +1,16 @@
 <template>
-    <v-card class="c" max-width="500" style="background-color: #8cd3b9">
+    <v-card class="c" max-width="500" style="background-color: #07b9ee" >
         <v-row>
             <v-col>
-                <v-card-title class="text-center ti" > Crear Estado Equipo </v-card-title>
+                <row  class="text-center ti">
+                    <v-card-title> Estado Prestamo </v-card-title>
+                </row>
+                
                 <v-row class="d-flex justify-center align-center">
-                    <v-img class="image" src="https://pcpcsolutions.com/images/pcmantenimiento.png"></v-img>
+                    <v-img class="image" src="https://universoabiertoblog.files.wordpress.com/2016/07/book-pc.jpg?w=489&h=275"></v-img>
                 </v-row>
                 <v-divider></v-divider>
-
+              
                 <v-card-text>
                     <v-form ref="form" v-model="valid" lazy-validation>
                         <v-text-field v-model="paquete.estado" :counter="10" :rules="campoRules" label="Estado"
@@ -21,13 +24,14 @@
 
                     </v-form>
                 </v-card-text>
+  
             </v-col>
 
         </v-row>
 
         <v-row>
-        <v-toolbar  height="90px" dark prominent color="#A2D9CE" elevation="16">
-            <v-toolbar-title class=" text-center color-text">Listado de Estado Equipo</v-toolbar-title>
+        <v-toolbar  height="90px" dark prominent color="#A9CCE3" elevation="16">
+            <v-toolbar-title class=" text-center color-text">Lista de estados prestamo</v-toolbar-title>
             <v-spacer></v-spacer>
         </v-toolbar>
         <v-data-table :headers="headers" :items="datos" :items-per-page="5" class="elevation-1">
@@ -43,14 +47,14 @@
             </template>
         </v-data-table>
 
-        <v-dialog  height="500px" width="700px" v-model="dialogoEditar">
+        <v-dialog  height="700px" width="500px" v-model="dialogoEditar">
             <v-card>
             <v-card-text>
                 <v-form ref="formEditar"  lazy-validation>
-                    <v-text-field v-model="paqueteEditar.estadousuario" :counter="10" :rules="campoRules" label="Estado"
+                    <v-text-field v-model="paqueteEditar.estado" :counter="10" :rules="campoRules" label="Estado"
                         required></v-text-field>
 
-                    <v-btn color="success" class="mr-8 lighten-2" @click="editarEstado()" small>
+                    <v-btn color="info" class="mr-8 lighten-2" @click="editarEstado()" small>
                         Editar
                     </v-btn>
 
@@ -73,7 +77,7 @@ export default {
         campoRules: [(v) => !!v || "Campo Requerido"],
 
         paquete: {
-            estadousuario: null,
+            estado: null,
 
         },
         paqueteEditar: {
@@ -82,9 +86,9 @@ export default {
 
         },
         headers: [
-            { text: "id", value: "id" },
+            { text: "Id", value: "id" },
 
-            { text: "estado", value: "estado" },
+            { text: "Estado", value: "estado" },
 
             { text: 'Actions', value: 'actions', sortable: false },
 
@@ -99,7 +103,7 @@ export default {
             var vm = this;
             if (this.$refs.form.validate()) {
                 axios
-                    .post(" http://localhost:3000/estado-equipo/crearEstado", this.paquete)
+                    .post(" http://localhost:3000/estadoprestamo/crear", this.paquete)
                     .then(function (response) {
 
                         alert("guardado");
@@ -118,8 +122,8 @@ export default {
         },
         async cargar() {
             var vm = this
-            await axios
-                .get("http://localhost:3000/estado-equipo/obtenerEstado")
+             await axios
+                .get("http://localhost:3000/estadoprestamo/")
                 .then(function (response) {
                     // handle success
                     vm.datos = response.data;
@@ -145,11 +149,12 @@ export default {
 
             
 
-            },
+        },
+
                         
          async deleteItem(id) {
             alert(id);
-            await axios.delete('http://localhost:3000/estado-equipo/eliminarEstado/' + id).then(response => {
+            await axios.delete('http://localhost:3000/estadoprestamo/' + id).then(response => {
                 console.log(response.data);
                 this.cargar();
             
@@ -157,7 +162,7 @@ export default {
         },
         async editarEstado() {
             try {
-                await axios.put('http://localhost:3000/estado-equipo/actualizarestado',this.paqueteEditar).then(() => {
+                await axios.put('http://localhost:3000/estadoprestamo/actualizar',this.paqueteEditar).then(() => {
                 this.dialogoEditar = false;
                 this.cargar()
                 ;
@@ -184,29 +189,29 @@ export default {
   
 <style>
 .c {
-    background-color: white;
+    background-color: rgb(244, 239, 239);
     border-radius: 10px;
-    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 2px 10px rgba(18, 14, 14, 0.1);
     padding: 20px;
     max-width: 800px;
     margin: 0 auto;
 }
 
 .ti {
-    font-size: 50px;
+    font-size: 48px;
     font-weight: 180px;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serifS;
     text-align: center;
 }
 
 .image {
-    max-width: 230px;
+    max-width: 300px;
     height: 200px;
 }
 
 .color-text {
-    color: #04080cd5;
-  }
+    color: #0e1114d5;
+}
 
 
 </style>
