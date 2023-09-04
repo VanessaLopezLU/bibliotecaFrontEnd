@@ -76,6 +76,20 @@ export default {
         hiddenOnCollapse: true,
       },
       {
+        title: "Usuario",
+        icon: "fas fa-user-cog",
+        child: [
+          {
+            href:  '/dashboard/usuario',
+            title: "Registro Usuario",
+          },
+          {
+            href: '/dashboard/estadousuario',
+            title: "Estado Usuario",
+          },
+        ],
+      },
+      {
         title: "Registro Dispositivo",
         icon: "far fa-address-book",
         child: [

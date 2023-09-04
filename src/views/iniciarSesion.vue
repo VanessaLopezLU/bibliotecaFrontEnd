@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar app dark img src="../assets/fo.png" height="180">
+    <v-app-bar app dark img src="" height="180">
       <v-row>
         <v-col cols="1">
           <img
