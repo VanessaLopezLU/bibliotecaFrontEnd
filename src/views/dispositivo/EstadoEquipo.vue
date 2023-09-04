@@ -1,5 +1,5 @@
 <template>
-    <v-card class="c" max-width="500" style="background-color: #8cd3b9">
+    <v-card class="c" max-width="500" style="background-color: #89d8dde5">
         <v-row>
             <v-col>
                 <v-card-title class="text-center ti" > Crear Estado Equipo </v-card-title>
@@ -26,7 +26,7 @@
         </v-row>
 
         <v-row>
-        <v-toolbar  height="90px" dark prominent color="#A2D9CE" elevation="16">
+        <v-toolbar  height="90px" dark prominent color="#a9e5eae5" elevation="16">
             <v-toolbar-title class=" text-center color-text">Listado de Estado Equipo</v-toolbar-title>
             <v-spacer></v-spacer>
         </v-toolbar>
