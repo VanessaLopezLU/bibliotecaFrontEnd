@@ -135,7 +135,7 @@ export default {
       }
     },
     async obtenerRol() {
-      await axios.get('http://localhost:3000/rol/obtener').then(resp => {
+      await axios.get('http://localhost:3000/rol/').then(resp => {
         this.rolDb = resp.data;
       })
     },

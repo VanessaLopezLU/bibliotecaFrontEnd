@@ -5,7 +5,7 @@
         <v-col cols="1">
           <img
             src="../assets/logos/fondo1.png"
-            style="max-height: 240px; max-width: 300px"
+            style="max-height: 270px; max-width: 400px"
           />
         </v-col>
         <v-col cols="10">

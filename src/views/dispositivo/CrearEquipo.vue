@@ -20,7 +20,7 @@
                     </v-text-field>
 
 
-                     <v-select v-model="paquete.id_tipo" :items="tipoDB" item-text="tipo" item-value="id_tipo"
+                     <v-select v-model="paquete.id_tipo" :items="tipoDB" item-text="tipo" item-value="id"
                         :rules="campoRules" label="Tipo" required>
                     </v-select>
 
@@ -66,7 +66,7 @@
                                 <v-text-field v-model="paqueteEditar.descripcion" :counter="10" :rules="campoRules" label="Descripcion"
                                 required>
                             </v-text-field>
-                            <v-select v-model="paqueteEditar.id_tipo" :items="tipoDB" item-text="tipo" item-value="id_tipo"
+                            <v-select v-model="paqueteEditar.id_tipo" :items="tipoDB" item-text="tipo" item-value="id"
                                  :rules="campoRules" label="Tipo" required>
                             </v-select>
                             <v-select v-model="paqueteEditar.id_estado" :items="estadosDb" item-text="estado" item-value="id"
@@ -175,7 +175,7 @@ export default {
             
             this.paqueteEditar = {
                 id_estado: item.id_estado.id,
-                id_tipo: item.id_tipo.id_tipo,
+                id_tipo: item.id_tipo.id,
                 descripcion: item.descripcion,
                 serial: item.serial,
                 id : item.id

@@ -40,7 +40,7 @@
                 <v-icon small class="mr-2" @click="editItem(Object.assign({}, item))">
                     mdi-pencil
                 </v-icon>
-                <v-icon small @click="deleteItem(item.id_tipo)">
+                <v-icon small @click="deleteItem(item.id)">
                     mdi-delete
                 </v-icon>
             </template>
@@ -80,12 +80,12 @@ export default {
 
         },
         paqueteEditar: {
-            id_tipo:null,
+            id:null,
             tipo: null,
 
         },
         headers: [
-            { text: "id", value: "id_tipo" },
+            { text: "id", value: "id" },
 
             { text: "tipo ", value: "tipo" },
 
@@ -102,7 +102,7 @@ export default {
             var vm = this;
             if (this.$refs.form.validate()) {
                 axios
-                    .post(" http://localhost:3000/tipoequipo/crearTipo", this.paquete)
+                    .post(" http://localhost:3000/tipo-equipo/crear", this.paquete)
                     .then(function (response) {
 
                         alert("guardado");
@@ -122,7 +122,7 @@ export default {
         async cargar() {
             var vm = this
             await axios
-                .get("http://localhost:3000/tipoequipo/obtenerTipo")
+                .get("http://localhost:3000/tipo-equipo/")
                 .then(function (response) {
                     // handle success
                     vm.datos = response.data;
@@ -143,7 +143,7 @@ export default {
             this.dialogoEditar = true;
             this.paqueteEditar = {
                 tipo: item.tipo,
-                id_tipo: item.id_tipo
+                id: item.id
             }
 
             
@@ -152,7 +152,7 @@ export default {
                         
          async deleteItem(id) {
             alert(id);
-            await axios.delete('http://localhost:3000/tipoequipo/eliminarTipo/' + id).then(response => {
+            await axios.delete('http://localhost:3000/tipo-equipo/' + id).then(response => {
                 console.log(response.data);
                 this.cargar();
             
@@ -160,7 +160,7 @@ export default {
         },
         async editarTipo() {
             try {
-                await axios.put('http://localhost:3000/tipoequipo/actualizarTipo',this.paqueteEditar).then(() => {
+                await axios.put('http://localhost:3000/tipo-equipo/actualizar',this.paqueteEditar).then(() => {
                 this.dialogoEditar = false;
                 this.cargar()
                 ;
