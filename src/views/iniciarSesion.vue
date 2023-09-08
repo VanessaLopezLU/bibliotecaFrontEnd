@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar app dark img src="" height="180">
+    <v-app-bar app dark img src="../assets/logos/fo.png" height="180">
       <v-row>
         <v-col cols="1">
           <img
@@ -429,8 +429,13 @@ export default {
   font-family: "times new roman", 'cursive';
 }
 .let {
-  font-family: "times new roman", 'cursive';
+  font-family: "Garamond", 'cursive';
   margin-top: 80px;
+  font-size: 60px;
+  text-align: center;
+  color: rgb(65, 135, 62);
+
+  
 }
 .tar{
   font-family: "times new roman", 'cursive';

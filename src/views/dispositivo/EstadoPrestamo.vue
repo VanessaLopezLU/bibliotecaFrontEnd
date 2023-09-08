@@ -103,7 +103,7 @@ export default {
             var vm = this;
             if (this.$refs.form.validate()) {
                 axios
-                    .post(" http://localhost:3000/estadoprestamo/crear", this.paquete)
+                    .post(" http://localhost:3000/estado-prestamo/crear", this.paquete)
                     .then(function (response) {
 
                         alert("guardado");
@@ -123,7 +123,7 @@ export default {
         async cargar() {
             var vm = this
              await axios
-                .get("http://localhost:3000/estadoprestamo/")
+                .get("http://localhost:3000/estado-prestamo/")
                 .then(function (response) {
                     // handle success
                     vm.datos = response.data;
@@ -154,7 +154,7 @@ export default {
                         
          async deleteItem(id) {
             alert(id);
-            await axios.delete('http://localhost:3000/estadoprestamo/' + id).then(response => {
+            await axios.delete('http://localhost:3000/estado-prestamo/' + id).then(response => {
                 console.log(response.data);
                 this.cargar();
             
@@ -162,7 +162,7 @@ export default {
         },
         async editarEstado() {
             try {
-                await axios.put('http://localhost:3000/estadoprestamo/actualizar',this.paqueteEditar).then(() => {
+                await axios.put('http://localhost:3000/estado-prestamo/actualizar',this.paqueteEditar).then(() => {
                 this.dialogoEditar = false;
                 this.cargar()
                 ;

@@ -34,8 +34,8 @@
                         
                  
 
-                    <v-btn color="info" class="mr-12 lighten-2" @click="cancelar" small>
-                        Cancelar
+                    <v-btn color="info" class="mr-12 lighten-2" @click="guardar" small>
+                        guardar
                     </v-btn>
                 </v-form>
                 
@@ -159,12 +159,12 @@ export default {
        
         
         async listarEstados() {
-            await axios.get('http://localhost:3000/estado-equipo/obtenerEstado').then(resp => {
+            await axios.get('http://localhost:3000/estado-equipo/').then(resp => {
                 this.estadosDb = resp.data;
             })
         },
         async listarTipos() {
-            await axios.get('http://localhost:3000/tipoequipo/obtenerTipo').then(resp => {
+            await axios.get('http://localhost:3000/tipo-equipo/').then(resp => {
                 this.tipoDB = resp.data;
             })
 
