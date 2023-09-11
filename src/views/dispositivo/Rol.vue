@@ -40,7 +40,7 @@
                 <v-icon small class="mr-2" @click="editItem(Object.assign({}, item))">
                     mdi-pencil
                 </v-icon>
-                <v-icon small @click="deleteItem(item.id_rol)">
+                <v-icon small @click="deleteItem(item.id)">
                     mdi-delete
                 </v-icon>
             </template>
@@ -80,12 +80,12 @@ export default {
 
         },
         paqueteEditar: {
-            id_rol:null,
+            id:null,
             descripcion: null,
 
         },
         headers: [
-            { text: "Id", value: "id_rol" },
+            { text: "Id", value: "id" },
 
             { text: "Descripcion", value: "descripcion" },
 
@@ -122,7 +122,7 @@ export default {
         async cargar() {
             var vm = this
             await axios
-                .get("http://localhost:3000/rol/obtener")
+                .get("http://localhost:3000/rol/")
                 .then(function (response) {
                     // handle success
                     vm.datos = response.data;

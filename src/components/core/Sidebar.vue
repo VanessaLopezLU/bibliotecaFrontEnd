@@ -77,7 +77,7 @@ export default {
       },
       {
         title: "Usuario",
-        icon: "fas fa-user-cog",
+        icon: "fas fa-user",
         child: [
           {
             href:  '/dashboard/usuario',

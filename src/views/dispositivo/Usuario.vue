@@ -11,35 +11,45 @@
 
           <v-card-text>
             <v-form ref="form" v-model="valid" lazy-validation>
-              <v-text-field v-model="paquete.cedula" :counter="10" :rules="campoRules" label="Cedula"
-                required></v-text-field>
+              <v-text-field v-model="paquete.cedula" type="number" :rules="campoRules" label="Cedula" required>
+              </v-text-field>
 
-              <v-text-field v-model="paquete.nombre" :rules="campoRules" label="Nombre" required></v-text-field>
+              <v-text-field v-model="paquete.nombre" :rules="campoRules" label="Nombre" required>
+              </v-text-field>
 
-              <v-text-field v-model="paquete.apellido" :rules="campoRules" label="Apellido" required></v-text-field>
+              <v-text-field v-model="paquete.apellido" :rules="campoRules" label="Apellido" required>
+              </v-text-field>
 
-              <v-text-field v-model="paquete.correo" :rules="campoRules" label="Correo" required></v-text-field>
+              <v-text-field v-model="paquete.correo" :rules="campoRules" label="Correo" required>
 
-              <v-text-field v-model="paquete.telefono" :rules="campoRules" label="Telefono" required></v-text-field>
+              </v-text-field>
 
-              <v-text-field v-model="paquete.usuario" :rules="campoRules" label="Usuario" required></v-text-field>
+              <v-text-field v-model="paquete.telefono"  type="number" :rules="campoRules" label="Telefono" required>
 
-              <v-text-field v-model="paquete.contrasena" :rules="campoRules" label="Contrasena" required></v-text-field>
+              </v-text-field>
 
-              <v-select v-model="paquete.id_rol" :items="rolDb" item-text="descripcion" item-value="id_rol"
+              <v-text-field v-model="paquete.usuario" :rules="campoRules" label="Usuario" required>
+
+              </v-text-field>
+
+              <v-text-field v-model="paquete.contrasena" :rules="campoRules" label="Contrasena" required>
+                
+              </v-text-field>
+
+              <v-select v-model="paquete.id_rol" :items="rolDb" item-text="descripcion" item-value="id"
                 :rules="campoRules" label="Rol" required></v-select>
 
-              <v-select v-model="paquete.id" :items="estadosDb" item-text="estado" item-value="id"
+              <v-select v-model="paquete.id_estado" :items="estadosDb" item-text="estado" item-value="id"
                 :rules="campoRules" label="Estado" required></v-select>
 
-              <v-btn color="success" class="mr-8 lighten-2" @click="guardar" small>
-                Crear
+              <v-btn color="info" class="mr-8 lighten-2" @click="guardar" small>
+                Guardar
               </v-btn>
             </v-form>
           </v-card-text>
         </v-col>
-        <v-row>
-          <v-toolbar height="90px" dark prominent color="#A9CCE3" elevation="16">
+        <v-row justify="center">
+          <v-toolbar height="90px" dark prominent color="#A9CCE3" elevation="7">
             <v-toolbar-title class=" text-center color-text">Listar Usuario</v-toolbar-title>
             <v-spacer></v-spacer>
           </v-toolbar>
@@ -74,57 +84,75 @@ export default {
 
     campoRules: [(v) => !!v || "Campo Requerido"],
 
-    paquete: {
-      Cedula: null,
-      Nombre: null,
-      Apellido: null,
-      Correo: null,
-      Telefono: null,
-      Usuario: null,
-      Contrasena: null,
+    paquete:{
+      cedula: null,
+      nombre: null,
+      apellido: null,
+      correo: null,
+      telefono: null,
+      usuario: null,
+      contrasena: null,
       id_rol: null,
-      id: null
+      id_estado: null
 
     },
     rolDb:[],
     estadosDb: [],
 
+    paqueteEditar:{  cedula: null,
+      nombre: null,
+      apellido: null,
+      correo: null,
+      telefono: null,
+      usuario: null,
+      contrasena: null,
+      id_rol: null,
+      id_estado: null
 
+
+
+    },
+   
     headers: [
-      { text: "Cedula", value: "Cedula" },
+      { text: "Cedula", value: "cedula" },
 
-      { text: "Nombre", value: "Nombre" },
+      { text: "Nombre", value: "nombre" },
 
-      { text: "Apellido", value: "Apellido" },
+      { text: "Apellido", value: "apellido" },
 
-      { text: "Correo", value: "Correo" },
+      { text: "Correo", value: "correo" },
 
-      { text: "Telefono", value: "Telefono" },
+      { text: "Telefono", value: "telefono" },
 
-      { text: "Usuario", value: "Usuario" },
+      { text: "Usuario", value: "usuario" },
 
-      { text: "Contrasena", value: "Contrasena" },
+      { text: "Contrasena", value: "contrasena" },
 
       { text: "Rol", value: "id_rol.descripcion" },
 
-      { text: "Estado", value: "id.estado" },
+      { text: "Estado", value: "id_estado.estado" },
 
       { text: 'Actions', value: 'actions', sortable: false },
 
     ],
-
     datos: [],
+
+   
   }),
 
   methods: {
     guardar() {
       var vm = this;
       if (this.$refs.form.validate()) {
+        this.paquete.cedula = parseInt(this.paquete.cedula, 15)
+        this.paquete.telefono = parseInt(this.paquete.telefono,20)
         axios
-          .post(" http://localhost:3000/user/crear", this.paquete)
+          .post("http://localhost:3000/user/crear",  this.paquete)
           .then(function (response) {
+            
+            alert("guardado");
             console.log(response);
-            alert("Guardado");
+            vm.cargar()
           })
           .catch(function (error) {
             console.log(error);
@@ -135,39 +163,39 @@ export default {
       }
     },
     async obtenerRol() {
-      await axios.get('http://localhost:3000/rol/').then(resp => {
+      await axios.get('http://localhost:3000/rol').then(resp => {
         this.rolDb = resp.data;
       })
     },
     async obtenerEstado() {
-      await axios.get('http://localhost:3000/estadousuario').then(resp => {
+      await axios.get('http://localhost:3000/estado-usuario').then(resp => {
         this.estadosDb = resp.data;
       })
     },
-
     editItem(item) {
-      console.log(item);
-      this.dialogoEditar = true;
-
-      this.paqueteEditar = {
-        Cedula: item.Cedula,
-        Nombre: item.Nombre,
-        Apellido: item.Apellido,
-        Correo: item.Correo,
-        Usuario: item.Usuario,
-        Contrasena: item.Contrasena,
-        Rol: item.id_rol.rol
-      }
-    },
+            console.log(item);
+            this.dialogoEditar = true;
+            
+            this.paqueteEditar = {
+                id_estado: item.id_estado.id,
+                id_rol: item.id_rol.id,
+                contrasena: item.contrasena, 
+                usuario: item.usuario,
+                telefono: item.telefono,
+                correo: item.correo,
+                apellido: item.apellido,
+                nombre: item.nombre,
+                cedula : item.cedula
+           }
+         },
 
     async cargar() {
       var vm = this;
       await axios
-      axios.get("http://localhost:3000/user/")
+      axios.get("http://localhost:3000/user")
       axios.then(function (response) {
         vm.datos = response.data;
         console.log(vm.datos);
-        vm.ObtenerRoles();
       })
         .catch(function (error) {
           console.log(error);
@@ -176,15 +204,15 @@ export default {
         });
     },
 
-    async deleteItem(id) {
-      alert(id);
-      await axios.delete('http://localhost:3000/user/' + id).then(response => {
+    async deleteItem(cedula) {
+      alert(cedula);
+      await axios.delete('http://localhost:3000/user/' + cedula).then(response => {
         console.log(response.data);
         this.cargar();
 
       })
     },
-    async editarEquipo() {
+    async editarUser() {
       try {
         await axios.put('http://localhost:3000/user/actualizar', this.paqueteEditar).then(() => {
           this.dialogoEditar = false;
@@ -204,7 +232,6 @@ export default {
         this.cargar();
         this.obtenerRol();
         this.obtenerEstado();
-        
         var vm = this;
         axios
             .get("http://localhost:3000/user/")

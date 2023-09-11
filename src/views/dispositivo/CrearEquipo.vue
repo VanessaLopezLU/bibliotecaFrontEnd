@@ -9,10 +9,7 @@
             <v-divider></v-divider>
             <v-card-text>
                 <v-form ref="form" v-model="valid" lazy-validation>
-                    <v-text-field v-model="paquete.serial" :rules="campoRules" label="Serial" required>
-
-
-                        
+                    <v-text-field v-model="paquete.serial" :rules="campoRules" label="Serial" required>  
                     </v-text-field>
 
                     <v-text-field v-model="paquete.descripcion" :rules="campoRules" label="Descripción"
