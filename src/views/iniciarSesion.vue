@@ -84,6 +84,7 @@
                     <vs-button color="#A9DFBF" @click="login"
                       >Iniciar Sesión</vs-button
                     >
+                    
                   </div>
                   <div
                     class="d-flex justify-content-center mt-3 login_container"

@@ -23,6 +23,7 @@ const routes = [{
             path: '/dashboard/welcome',
             component: () =>
                 import('../views/welcome.vue'),
+                
         },
 
         {

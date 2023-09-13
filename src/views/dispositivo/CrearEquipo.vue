@@ -1,6 +1,6 @@
 <template>
     <v-row  justify="center" class="crearProducto">
-        <v-card justify="center" max-width="600" style="background-color: #d6eaf8">
+        <v-card justify="center" max-width="1000" style="background-color: #a4d299">
             <v-card-title class="ti"> Crear Equipo </v-card-title>
             <v-row class="d-flex justify-center align-center">
                 <v-img class="image" src="https://st2.depositphotos.com/1001877/5328/i/450/depositphotos_53286999-stock-photo-computer-devices-mobile-phone-laptop.jpg"></v-img>
@@ -31,14 +31,14 @@
                         
                  
 
-                    <v-btn color="info" class="mr-12 lighten-2" @click="guardar" small>
+                    <v-btn  justify="center" color=" aliceblue" style="color: #c8e4c2 ;"  class="mr-12 lighten-2" @click="guardar" small>
                         guardar
                     </v-btn>
                 </v-form>
                 
             </v-card-text>
             <div justify="center">
-                <v-toolbar dark prominent color="#ABEBC6" elevation="7">
+                <v-toolbar dark prominent color="#c8e4c2" elevation="7">
                     <v-toolbar-title class="t">Listado de Dispositivos</v-toolbar-title>
 
                     <v-spacer></v-spacer>
