@@ -1,124 +1,121 @@
 <template>
-  <div>
-    <!-- Sección 1: Identificación y Nombre y Apellido -->
-    <div class="div1 row mx-auto">
-      <!-- Identificación -->
-      <div class="col-6">
-        <v-text-field class="titulos" label="Identificación" outlined v-model="identificacion"></v-text-field>
-      </div>
-      
-      <!-- Nombre y Apellido -->
-      <div class="col-6">
-        <v-text-field class="titulos" label="Nombre y Apellido" outlined v-model="nombreApellido"></v-text-field>
-      </div>
-      
-      <!-- Fecha Inicial -->
-      <div class="col-6">
-        <div class="input-group">
-          <v-text-field class="titulos" label="Fecha Inicial" outlined v-model="fechaInicial" @click="toggleDatePicker('fechaInicial')">
-            <template v-slot:append>
-              <v-icon @click="toggleDatePicker('fechaInicial')">mdi-calendar</v-icon>
-            </template>
-          </v-text-field>
-          <v-date-picker v-model="fechaInicial" @input="hideDatePicker" v-if="showDatePickerFor === 'fechaInicial'" color="orange"></v-date-picker>
-        </div>
-      </div>
-      
-      <!-- Hora Inicial -->
-      <div class="col-6">
-        <div class="input-group">
-          <v-text-field class="titulos" label="Hora Inicial" outlined v-model="horaInicial" @click="toggleTimePicker('horaInicial')">
-            <template v-slot:append>
-              <v-icon @click="toggleTimePicker('horaInicial')">mdi-clock-time-four-outline</v-icon>
-            </template>
-          </v-text-field>
-          <v-time-picker v-model="horaInicial" format="24hr" @input="hideTimePicker" v-if="showTimePickerFor === 'horaInicial'" color="orange"></v-time-picker>
-        </div>
-      </div>
-    </div>
+  <v-container justify="center" max-width="1000" style="background-color: #a4d299">
+    
+    <v-card elevation="2">
+      <v-card-title class="ti  green lighten-1">Formulario de Préstamo</v-card-title>
+      <v-card-text>
+        <v-form ref="form">
+          <v-row>
+            <v-col cols="12" md="6">
+              <v-text-field v-model="nombre" label="Nombres"></v-text-field>
+            </v-col>
+            <v-col cols="12" md="6">
+              <v-text-field v-model="cedula" label="Número de documento"></v-text-field>
+            </v-col>
+            <v-col cols="12" md="6">
+              <v-menu v-model="menu" :close-on-content-click="false" transition="scale-transition" offset-y min-width="290px">
+                <template v-slot:activator="{ on }">
+                  <v-text-field v-model="fechaInicial" label="Fecha Inicial" readonly v-on="on"></v-text-field>
+                </template>
+                <v-date-picker v-model="fechaInicial" no-title scrollable>
+                  <v-spacer></v-spacer>
+                  <v-btn text color="primary" @click="menu = false">Cancelar</v-btn>
+                  <v-btn text color="primary" @click="menu = false; $refs.form.validate()">Aceptar</v-btn>
+                </v-date-picker>
+              </v-menu>
+            </v-col>
+            <v-col cols="12" md="6">
+              <v-menu v-model="menu2" :close-on-content-click="false" transition="scale-transition" offset-y min-width="290px">
+                <template v-slot:activator="{ on }">
+                  <v-text-field v-model="picker" ampm-in-title label="Hora Inicial" readonly v-on="on"></v-text-field>
+                </template>
+                <v-time-picker v-model="picker" ampm-in-title full-width>
+                  <v-btn text color="primary" @click="menu2 = false; $refs.form.validate()">Aceptar</v-btn>
+                </v-time-picker>
+              </v-menu>
+            </v-col>
+            <v-col cols="12" md="6">
+              <v-menu v-model="menu3" :close-on-content-click="false" transition="scale-transition" offset-y min-width="290px">
+                <template v-slot:activator="{ on }">
+                  <v-text-field v-model="fechaFinal" label="Fecha Final" readonly v-on="on"></v-text-field>
+                </template>
+                <v-date-picker v-model="fechaFinal" no-title scrollable>
+                  <v-spacer></v-spacer>
+                  <v-btn text color="primary" @click="menu3 = false; $refs.form.validate()">Cancelar</v-btn>
+                  <v-btn text color="primary" @click="menu3 = false">Aceptar</v-btn>
+                </v-date-picker>
+              </v-menu>
+            </v-col>
+            <v-col cols="12" md="6">
+              <v-menu v-model="menu4" :close-on-content-click="false" transition="scale-transition" offset-y min-width="290px">
+                <template v-slot:activator="{ on }">
+                  <v-text-field v-model="horaFinal" ampm-in-title label="Hora Final" readonly v-on="on"></v-text-field>
+                </template>
+                <v-time-picker v-model="horaFinal" ampm-in-title full-width>
+                  <v-btn text color="primary" @click="menu4 = false">Aceptar</v-btn>
+                </v-time-picker>
+              </v-menu>
+            </v-col>
+            <v-col cols="12" md="6">
+              <v-select v-model="equipo" label="Equipo" :items="equipos"></v-select>
+            </v-col>
+            <v-col cols="12" md="6">
+              <v-text-field v-model="cedula" label="Cantidad"></v-text-field>
+            </v-col>
 
-    <!-- Sección 2: Tipo de Equipo, Cantidad y Botón de Búsqueda -->
-    <div class="div2 row mx-auto">
-      <!-- Tipo de Equipo -->
-      <div class="col-5">
-        <v-select class="titulos" label="Tipo de Equipo" outlined v-model="tipoEquipo" :items="tiposEquipo"></v-select>
-      </div>
 
-      <!-- Cantidad -->
-      <div class="col-5">
-        <v-select class="titulos" label="Cantidad" outlined v-model="cantidad" :items="cantidades"></v-select>
-      </div>
-      
-      <!-- Botón de Búsqueda -->
-      <div class="col-2">
-        <v-btn class="boton">Buscar</v-btn>
-      </div>
-    </div>
-
-    <!-- Sección de Tabla -->
-    <div class="tabla">
-      <v-simple-table>
-        <template v-slot:default>
-          <thead>
-            <tr>
-              <th class="texttabla">Tipo de Equipo</th>
-              <th class="texttabla">Serial</th>
-              <!-- Agrega más encabezados de columna si es necesario -->
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="item in desserts" :key="item.name">
-              <td class="texttabla">{{ item.tipo }}</td>
-              <td class="texttabla">{{ item.serial }}</td>
-              <!-- Agrega más celdas de datos si es necesario -->
-              <td class="texttabla">
-                <v-btn class="mx-2" fab dark small color="red">
-                  <v-icon dark>mdi-delete</v-icon>
-                </v-btn>
-              </td>
-            </tr>
-          </tbody>
-        </template>
-      </v-simple-table>
-    </div>
-  </div>
+          </v-row>
+        </v-form>
+      </v-card-text>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn @click="guardarCambios" color="primary">Guardar Cambios</v-btn>
+      </v-card-actions>
+    </v-card>
+  
+  </v-container>
 </template>
 
 <script>
 export default {
   data() {
     return {
-      identificacion: '',
-      nombreApellido: '',
+      nombre: '',
+      cedula: '',
       fechaInicial: null,
-      horaInicial: null,
-      tipoEquipo: null,
-      cantidad: null,
-      tiposEquipo: [], // Rellenar con datos reales
-      cantidades: [], // Rellenar con datos reales
-      showDatePickerFor: '',
-      showTimePickerFor: '',
-      desserts: [] // Rellenar con datos reales
-    };
+      picker: null,
+      fechaFinal: null,
+      horaFinal: null,
+      menu: false,
+      menu2: false,
+      menu3: false,
+      menu4: false
+    }
   },
-  methods: {
-    toggleDatePicker(field) {
-      this.showDatePickerFor = field;
-    },
-    toggleTimePicker(field) {
-      this.showTimePickerFor = field;
-    },
-    hideDatePicker() {
-      this.showDatePickerFor = '';
-    },
-    hideTimePicker() {
-      this.showTimePickerFor = '';
-    },
-    // Agrega más métodos según sea necesario
-  }
-};
-</script>
+        devices: [
+          { name: "Portatil" },
+          { name: "VideoBeam" },
+          { name: "Teclado" },
+          { name: "Extension" },
+          { name: "Mouse" },
+          { name: "Cable HDMI" },
+        ],
+        hora: [],
+        cantidad: [],
+      };
 
-<style scoped>
-/* Agrega tus estilos CSS personalizados aquí */
-</style>
+  
+  </script>
+
+  <style>
+  .ti {
+    color: rgb(8, 4, 4);
+    font-size: 36px;
+    font-family: "times new roman", cursive;
+    text-align: center;
+    float: center;
+    
+}
+
+
+  </style>
