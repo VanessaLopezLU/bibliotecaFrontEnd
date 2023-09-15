@@ -27,7 +27,7 @@
 
         <v-row>
         <v-toolbar  height="90px" dark prominent color="#A2D9CE" elevation="16">
-            <v-toolbar-title class=" text-center color-text">Listado de Estado Equipo</v-toolbar-title>
+            <v-toolbar-title class=" text-center color-text">Listado de Estado Usuario</v-toolbar-title>
             <v-spacer></v-spacer>
         </v-toolbar>
         <v-data-table :headers="headers" :items="datos" :items-per-page="5" class="elevation-1">
