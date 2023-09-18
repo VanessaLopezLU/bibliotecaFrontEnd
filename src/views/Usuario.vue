@@ -1,11 +1,13 @@
 <template>
+
   <v-row justify="center" class="crearProducto">
-    <v-card justify="center" max-width="600" style="background-color: #b2ddf3">
+  
+    <v-card justify="center" width="500" style="background-color: transparent;">
       <v-row>
         <v-col>
-          <v-card-title class="text-center ti"> Registrar Usuario </v-card-title>
+          <v-card-title class=" titext-center "> Registrar Usuario </v-card-title>
           <v-row class="d-flex justify-center align-center">
-            <v-img class="image" src="https://sglchile.cl/wp-content/uploads/2022/01/login-usuario-3.png"></v-img>
+            <v-img  class="image" src="https://sglchile.cl/wp-content/uploads/2022/01/login-usuario-3.png"></v-img>
           </v-row>
           <v-divider></v-divider>
 
@@ -48,27 +50,6 @@
             </v-form>
           </v-card-text>
         </v-col>
-        <v-row justify="center">
-          <v-toolbar height="90px" dark prominent color="#A9CCE3" elevation="7">
-            <v-toolbar-title class=" text-center color-text">Listar Usuario</v-toolbar-title>
-            <v-spacer></v-spacer>
-          </v-toolbar>
-          <v-data-table :headers="headers" :items="datos" :items-per-page="5" class="elevation-1">
-
-            <template v-slot:item.actions="{ item }">
-              <v-icon small class="mr-2" @click="editItem(Object.assign({}, item))">
-                mdi-pencil
-              </v-icon>
-              <v-icon small @click="deleteItem(item.cedula)">
-                mdi-delete
-              </v-icon>
-            </template>
-
-          </v-data-table>
-
-
-        </v-row>
-
       </v-row>
 
     </v-card>
@@ -172,22 +153,7 @@ export default {
         this.estadosDb = resp.data;
       })
     },
-    editItem(item) {
-            console.log(item);
-            this.dialogoEditar = true;
-            
-            this.paqueteEditar = {
-                id_estado: item.id_estado.id,
-                id_rol: item.id_rol.id,
-                contrasena: item.contrasena, 
-                usuario: item.usuario,
-                telefono: item.telefono,
-                correo: item.correo,
-                apellido: item.apellido,
-                nombre: item.nombre,
-                cedula : item.cedula
-           }
-         },
+  
 
     async cargar() {
       var vm = this;
@@ -204,29 +170,7 @@ export default {
         });
     },
 
-    async deleteItem(cedula) {
-      alert(cedula);
-      await axios.delete('http://localhost:3000/user/' + cedula).then(response => {
-        console.log(response.data);
-        this.cargar();
-
-      })
-    },
-    async editarUser() {
-      try {
-        await axios.put('http://localhost:3000/user/actualizar', this.paqueteEditar).then(() => {
-          this.dialogoEditar = false;
-          this.cargar()
-            ;
-        });
-
-      }
-      catch (error) {
-        this.dialogoEditar = false;
-        alert(error);
-      }
-
-    }
+   
   },
   mounted() {
         this.cargar();
@@ -265,5 +209,12 @@ export default {
   padding: 20px;
   max-width: 800px;
   margin: 0 auto;
+}
+.crearProducto{
+  background-image: url("../assets/fondo2.png");
+}
+.image{
+  width: 150px;
+  height: 400px;
 }
 </style>

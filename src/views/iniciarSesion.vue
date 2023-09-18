@@ -84,6 +84,9 @@
                     <vs-button color="#A9DFBF" @click="login"
                       >Iniciar Sesión</vs-button
                     >
+                    <vs-button color="#A9DFBF" @click="registrarse"
+                      >Registrarse</vs-button
+                    >
                     
                   </div>
                   <div
@@ -409,6 +412,9 @@ export default {
   methods: {
     login() {
       this.$router.push("dashboard/welcome");
+    },
+    registrarse() {
+      this.$router.push("usuario");
     },
   },
 };

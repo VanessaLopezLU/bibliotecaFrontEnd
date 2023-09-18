@@ -11,6 +11,13 @@ const routes = [{
     name: 'Login',
     component: () =>
         import('../views/iniciarSesion.vue')
+
+},
+{
+    path: '/usuario',
+    name: 'Usuario',
+    component: () =>
+        import('../views/Usuario.vue')
 },
 {
     path: '/dashboard',
@@ -62,14 +69,16 @@ const routes = [{
             name: 'DashboardUsuario',
             path: '/dashboard/usuario',
             component: () =>
-                import('../views/dispositivo/Usuario.vue'),
-        },
+                import('../views/dispositivo/ListarUsuario.vue'),
+        },    
+      
         {
             name: 'DashboardEstadoUsuario',
             path: '/dashboard/estadousuario',
             component: () =>
                 import('../views/dispositivo/EstadoUsuario.vue'),
-        },        {
+        },       
+        {
             name: 'DashboardEstadoPrestamo',
             path: '/dashboard/estadoprestamo',
             component: () =>
