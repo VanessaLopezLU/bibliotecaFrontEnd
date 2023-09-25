@@ -20,6 +20,37 @@
               </template>
   
             </v-data-table>
+            <v-dialog  height="500px" width="700px" v-model="dialogoEditar">
+              <v-card>
+              <v-card-text>
+                  <v-form ref="formEditar"  lazy-validation>
+                      <v-text-field v-model="paqueteEditar.cedula" :counter="10" :rules="campoRules" label="Cedula"
+                          required>
+                      </v-text-field>
+                      <v-text-field v-model="paqueteEditar.nombre" :counter="10" :rules="campoRules" label="Descripcion"
+                          required>
+                      </v-text-field>
+                      <v-text-field v-model="paqueteEditar.apellido" :counter="10" :rules="campoRules" label="Descripcion"
+                      required>
+                     </v-text-field>
+                     <v-text-field v-model="paqueteEditar.correo" :counter="10" :rules="campoRules" label="Descripcion"
+                     required>
+                  </v-text-field>
+                      <v-select v-model="paqueteEditar.id_tipo" :items="tipoDB" item-text="tipo" item-value="id"
+                           :rules="campoRules" label="Tipo" required>
+                      </v-select>
+                      <v-select v-model="paqueteEditar.id_estado" :items="estadosDb" item-text="estado" item-value="id"
+                           :rules="campoRules" label="Estado" required>
+                      </v-select>
+  
+                      <v-btn color="success" class="mr-8 lighten-2" @click="editarUser()" small>
+                          Editar
+                      </v-btn>
+  
+                  </v-form>
+              </v-card-text>
+          </v-card>
+          </v-dialog>
   
   
   
@@ -34,6 +65,7 @@
   import axios from "axios";
   export default {
     data: () => ({
+dialogoEditar:false,
       valid: true,
   
       campoRules: [(v) => !!v || "Campo Requerido"],
@@ -80,38 +112,19 @@
     }),
   
     methods: {
-      guardar() {
+      async cargar() {
         var vm = this;
-        if (this.$refs.form.validate()) {
-          this.paquete.cedula = parseInt(this.paquete.cedula, 15)
-          this.paquete.telefono = parseInt(this.paquete.telefono,20)
-          axios
-            .post("http://localhost:3000/user/crear",  this.paquete)
-            .then(function (response) {
-              
-              alert("guardado");
-              console.log(response);
-              vm.cargar()
-            })
-            .catch(function (error) {
-              console.log(error);
-            })
-            .finally(function () {
-              vm.$refs.form.reset();
-            });
-        }
-      },
-      async obtenerRol() {
-        await axios.get('http://localhost:3000/rol').then(resp => {
-          this.rolDb = resp.data;
+        await  axios.get("http://localhost:3000/user").then(function (response) {
+          vm.datos = response.data;
+          console.log(vm.datos);
         })
+          .catch(function (error) {
+            console.log(error);
+          })
+          .finally(function () {
+          });
       },
-      async obtenerEstado() {
-        await axios.get('http://localhost:3000/estado-usuario').then(resp => {
-          this.estadosDb = resp.data;
-        })
-      },
-      editItem(item) {
+      async editItem(item) {
               console.log(item);
               this.dialogoEditar = true;
               
@@ -126,29 +139,17 @@
                   nombre: item.nombre,
                   cedula : item.cedula
              }
+             console.log(this.paqueteEditar);
            },
   
-      async cargar() {
-        var vm = this;
-        await axios
-        axios.get("http://localhost:3000/user")
-        axios.then(function (response) {
-          vm.datos = response.data;
-          console.log(vm.datos);
-        })
-          .catch(function (error) {
-            console.log(error);
-          })
-          .finally(function () {
-          });
-      },
+     
   
       async deleteItem(cedula) {
         alert(cedula);
         await axios.delete('http://localhost:3000/user/' + cedula).then(response => {
           console.log(response.data);
-          this.cargar();
-  
+        }).finally(async () => {
+          await this.cargar()
         })
       },
       async editarUser() {
@@ -167,7 +168,7 @@
   
       }
     },
-    mounted() {
+    async mounted() {
           this.cargar();
           this.obtenerRol();
           this.obtenerEstado();
