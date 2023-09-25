@@ -5,11 +5,10 @@
     <v-card justify="center" width="500" style="background-color: transparent;">
       <v-row>
         <v-col>
-          <v-card-title class=" titext-center "> Registrar Usuario </v-card-title>
+          
           <v-row class="d-flex justify-center align-center">
-            <v-img  class="image" src="https://sglchile.cl/wp-content/uploads/2022/01/login-usuario-3.png"></v-img>
           </v-row>
-          <v-divider></v-divider>
+          <v-img  class="image" src="../assets/registrar.jpeg"></v-img>
 
           <v-card-text>
             <v-form ref="form" v-model="valid" lazy-validation>
@@ -44,9 +43,11 @@
               <v-select v-model="paquete.id_estado" :items="estadosDb" item-text="estado" item-value="id"
                 :rules="campoRules" label="Estado" required></v-select>
 
-              <v-btn color="info" class="mr-8 lighten-2" @click="guardar" small>
-                Guardar
-              </v-btn>
+                <div class="button">
+                  <v-btn color="success" class="mr-8 lighten-2" @click="guardar" small>
+                    Guardar
+                  </v-btn>
+                </div>
             </v-form>
           </v-card-text>
         </v-col>
@@ -210,11 +211,19 @@ export default {
   max-width: 800px;
   margin: 0 auto;
 }
-.crearProducto{
-  background-image: url("../assets/fondo2.png");
+.crearProducto {
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.5), rgba(226, 215, 215, 0.5)),
+    url("../assets/fondo2.png");
 }
 .image{
-  width: 150px;
+  width: 2000px;
   height: 400px;
+  margin-top: 10px;
 }
+.button {
+  display: flex;
+  justify-content: center;
+}
+
 </style>

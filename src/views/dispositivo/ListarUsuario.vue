@@ -1,14 +1,14 @@
 <template>
     <v-container justify="center" max-width="2500" >
-      <v-card  justify="left" max-width="2500">
+      <v-card max-width="2500">
         <v-row>
 
-          <v-row >
+
             <v-toolbar  width="100px" dark prominent color="#5ce468" elevation="3">
-              <v-toolbar-title class=" text-center color-text">Listar Usuario</v-toolbar-title>
+              <v-toolbar-title  width="80" class="text-center color-text">Listar Usuario</v-toolbar-title>
               <v-spacer></v-spacer>
             </v-toolbar>
-            <v-data-table :headers="headers" :items="datos" :items-per-page="5" class="elevation-1">
+            <v-data-table :headers="headers" :items="datos" :items-per-page="5" class=" elevation-1">
   
               <template v-slot:item.actions="{ item }">
                 <v-icon small class="mr-2" @click="editItem(Object.assign({}, item))">
@@ -22,7 +22,6 @@
             </v-data-table>
   
   
-          </v-row>
   
         </v-row>
   
@@ -206,7 +205,9 @@
     max-width: 800px;
     margin: 0 auto;
   }
-  .crearProducto{
+  .row{
+    margin-top: 10px;
   }
+ 
  
   </style>
