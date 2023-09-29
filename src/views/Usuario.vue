@@ -37,7 +37,7 @@
                 
               </v-text-field>
 
-              <v-select v-model="paquete.id_rol" :items="rolDb" item-text="descripcion" item-value="id"
+              <v-select v-model="paquete.id_rol" :items="rolDb" item-text="rol" item-value="id"
                 :rules="campoRules" label="Rol" required></v-select>
 
               <v-select v-model="paquete.id_estado" :items="estadosDb" item-text="estado" item-value="id"
@@ -81,7 +81,8 @@ export default {
     rolDb:[],
     estadosDb: [],
 
-    paqueteEditar:{  cedula: null,
+    paqueteEditar:{ 
+      cedula: null,
       nombre: null,
       apellido: null,
       correo: null,
@@ -89,9 +90,7 @@ export default {
       usuario: null,
       contrasena: null,
       id_rol: null,
-      id_estado: null
-
-
+      id_estado: null,
 
     },
    
@@ -108,7 +107,7 @@ export default {
 
       { text: "Usuario", value: "usuario" },
 
-      { text: "Contrasena", value: "contrasena" },
+      { text: "Contraseña", value: "contrasena" },
 
       { text: "Rol", value: "id_rol.descripcion" },
 
