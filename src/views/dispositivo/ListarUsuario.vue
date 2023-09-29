@@ -55,11 +55,9 @@
               <v-select v-model="paqueteEditar.id_estado" :items="estadosDb" item-text="estado" item-value="id" :rules="campoRules" 
               label="Estado" required></v-select>
         
-              <div class="button">
-                <v-btn color="success" class="mr-8 lighten-2" @click="guardar" small>
-                  Guardar
+                <v-btn color="success" class="mr-4" @click="editarUser()" small>
+                  Editar
                 </v-btn>
-              </div>
               </v-form>
             </v-card-text>
           </v-card>
@@ -234,9 +232,5 @@ export default {
 
 .row {
   margin-top: 10px;
-}
-.button {
-  display: flex;
-  justify-content: center;
 }
 </style>
