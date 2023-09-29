@@ -79,13 +79,18 @@ export default {
         title: "Usuario",
         icon: "fas fa-user",
         child: [
+        
           {
-            href:  '/dashboard/usuario',
-            title: "Registro Usuario",
+            href: "/dashboard/rol",
+            title: "Rol",
           },
           {
             href: '/dashboard/estadousuario',
             title: "Estado Usuario",
+          },
+          {
+            href:  '/dashboard/usuario',
+            title: "Registro Usuario",
           },
         ],
       },
@@ -95,12 +100,9 @@ export default {
         child: [
           {
             href: "/dashboard/manager",
-            title: "Crear",
+            title: "Registrar Equipo ",
           },
-          {
-            href: "",
-            title: "Listar",
-          },
+         
         ],
       },
       {
@@ -134,10 +136,7 @@ export default {
             href: "/dashboard/tipoequipo",
             title: "Tipo Equipo",
           },
-          {
-            href: "/dashboard/rol",
-            title: "Rol",
-          },
+         
         ],
       },
     ],

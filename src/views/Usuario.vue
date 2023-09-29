@@ -80,20 +80,7 @@ export default {
     },
     rolDb:[],
     estadosDb: [],
-
-    paqueteEditar:{ 
-      cedula: null,
-      nombre: null,
-      apellido: null,
-      correo: null,
-      telefono: null,
-      usuario: null,
-      contrasena: null,
-      id_rol: null,
-      id_estado: null,
-
-    },
-   
+    
     headers: [
       { text: "Cedula", value: "cedula" },
 

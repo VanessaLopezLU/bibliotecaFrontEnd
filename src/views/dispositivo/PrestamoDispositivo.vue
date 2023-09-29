@@ -58,7 +58,7 @@
               </v-menu>
             </v-col>
             <v-col cols="12" md="6">
-              <v-select v-model="paquete.equipos" :items="equipoDB" item-text="Equipo" item-value="id"
+              <v-select v-model="paquete.id_equipo" :items="equipoDB" item-text="Equipo" item-value="id"
                         :rules="campoRules" label="Equipo" required>
                     </v-select>
             </v-col>
@@ -72,7 +72,11 @@
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn @click="guardarCambios" color="primary">Guardar Cambios</v-btn>
+        <div class="button">
+          <v-btn color="success" class="mr-8 lighten-2" @click="guardar" small>
+            Guardar
+          </v-btn>
+        </div>
       </v-card-actions>
     </v-card>
   
@@ -95,7 +99,7 @@ export default {
             cantidad: null,
             cedula: null,
             id_estadoprestamo:null,
-            equipos:null
+            id_equipo:null
         
         },
         hora_prestamo: null,
@@ -186,7 +190,7 @@ export default {
         async cargar() {
             var vm = this
             await axios
-                .get("http://localhost:3000/equipo/")
+                .get("http://localhost:3000/prestamo/")
                 .then(function (response) {
                     // handle success
                     vm.datos = response.data;
@@ -205,7 +209,7 @@ export default {
                            
          async deleteItem(id) {
             alert(id);
-            await axios.delete('http://localhost:3000/equipo/' + id).then(response => {
+            await axios.delete('http://localhost:3000/prestamo/' + id).then(response => {
                 console.log(response.data);
                 this.cargar();
             
@@ -213,7 +217,7 @@ export default {
         },
         async editarEquipo() {
             try {
-                await axios.put('http://localhost:3000/equipo/actualizar',this.paqueteEditar).then(() => {
+                await axios.put('http://localhost:3000/prestamo/actualizar',this.paqueteEditar).then(() => {
                 this.dialogoEditar = false;
                 this.cargar()
                 ;
@@ -230,10 +234,9 @@ export default {
     mounted() {
         this.cargar();
         this.listarEquipo();
-        this.listarTipos();
         var vm = this;
         axios
-            .get("http://localhost:3000/equipo")
+            .get("http://localhost:3000/prestamo")
             .then(function (response) {
                 // handle success
                 vm.datos = response.data;
@@ -259,6 +262,11 @@ export default {
     float: center;
     
 }
+.button {
+  display: flex;
+  justify-content: center;
+}
+
 
 
   </style>

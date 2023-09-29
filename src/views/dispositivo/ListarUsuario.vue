@@ -22,47 +22,48 @@
         </v-data-table>
         <v-dialog height="500px" width="700px" v-model="dialogoEditar">
           <v-card>
+            <v-card-title justify-center class="success lighten-2">
+              Editar Usuario
+            </v-card-title>
             <v-card-text>
               <v-form ref="formEditar" lazy-validation>
-                <v-text-field v-model="paqueteEditar.cedula" :counter="10" :rules="campoRules" label="Cedula" required>
+                <v-text-field v-model="paqueteEditar.cedula" :counter="10" :rules="campoRules"
+                 label="Cedula" required>
                 </v-text-field>
-                <v-text-field v-model="paqueteEditar.nombre" :counter="10" :rules="campoRules" label="Nombre"
-                  required>
-                </v-text-field>
-                <v-text-field v-model="paqueteEditar.apellido" :counter="10" :rules="campoRules" label="Apellido"
-                  required>
-                </v-text-field>
-                <v-text-field v-model="paqueteEditar.correo" :counter="10" :rules="campoRules" label="Correo"
-                  required>
-                </v-text-field>
-                <v-text-field v-model="paqueteEditar.telefono" :counter="10" :rules="campoRules" label="Telefono"
-                  required>
-                </v-text-field>
-                <v-text-field v-model="paqueteEditar.usuario" :counter="10" :rules="campoRules" label="Usuario"
-                  required>
-                </v-text-field>
-                <v-text-field v-model="paqueteEditar.contrasena" :counter="10" :rules="campoRules" label="Contraseña"
-                  required>
-                </v-text-field>
-                
-                
-                <v-select v-model="paqueteEditar.id_rol" :items="rolDb" item-text="rol" item-value="id"
-                  :rules="campoRules" label="Rol" required>
-                </v-select>
-                <v-select v-model="paqueteEditar.id_estado" :items="estadosDb" item-text="estado" item-value="id"
-                  :rules="campoRules" label="Estado" required>
-                </v-select>
-
-                <v-btn color="success" class="mr-8 lighten-2" @click="editarUser()" small>
-                  Editar
+                <v-text-field v-model="paqueteEditar.nombre" :counter="10" :rules="campoRules" 
+                label="Nombre" required>
+              </v-text-field>
+                <v-text-field v-model="paqueteEditar.apellido" :counter="10" :rules="campoRules" 
+                label="Apellido" required>
+              </v-text-field>
+                <v-text-field v-model="paqueteEditar.correo" :counter="10" :rules="campoRules" 
+                label="Correo" required>
+              </v-text-field>
+                <v-text-field v-model="paqueteEditar.telefono" :counter="10" :rules="campoRules" 
+                label="Telefono" required>
+              </v-text-field>
+                <v-text-field v-model="paqueteEditar.usuario" :counter="10" :rules="campoRules" 
+                label="Usuario" required>
+              </v-text-field>
+                <v-text-field v-model="paqueteEditar.contrasena" :counter="10" :rules="campoRules" 
+                label="Contraseña" required>
+              </v-text-field>
+        
+              <v-select v-model="paqueteEditar.id_rol" :items="rolDb" item-text="descripcion" item-value="id" :rules="campoRules" 
+                label="Rol" required>
+              </v-select>
+              <v-select v-model="paqueteEditar.id_estado" :items="estadosDb" item-text="estado" item-value="id" :rules="campoRules" 
+              label="Estado" required></v-select>
+        
+              <div class="button">
+                <v-btn color="success" class="mr-8 lighten-2" @click="guardar" small>
+                  Guardar
                 </v-btn>
-
+              </div>
               </v-form>
             </v-card-text>
           </v-card>
         </v-dialog>
-
-
 
       </v-row>
 
@@ -94,7 +95,7 @@ export default {
 
 
     },
-    rolDb:[],
+    rolDb: [],
     estadosDb: [],
 
     headers: [
@@ -110,7 +111,7 @@ export default {
 
       { text: "Usuario", value: "usuario" },
 
-      { text: "Contrasena", value: "contrasena" },
+      { text: "Contraseña", value: "contrasena" },
 
       { text: "Rol", value: "id_rol.descripcion" },
 
@@ -233,5 +234,9 @@ export default {
 
 .row {
   margin-top: 10px;
+}
+.button {
+  display: flex;
+  justify-content: center;
 }
 </style>
