@@ -1,7 +1,7 @@
 <template>
     <v-row  justify="center" class="crearProducto">
-        <v-card justify="center" max-width="1000" style="background-color: #a4d299">
-            <v-card-title class="ti"> Crear Equipo </v-card-title>
+        <v-card justify="center" max-width="1000" style="background-color: transparent;">
+            <v-card-title style="font-size: 28px;"> Crear Equipo </v-card-title>
             <v-row class="d-flex justify-center align-center">
                 <v-img class="image" src="https://st2.depositphotos.com/1001877/5328/i/450/depositphotos_53286999-stock-photo-computer-devices-mobile-phone-laptop.jpg"></v-img>
         
@@ -31,14 +31,14 @@
                         
                  
 
-                    <v-btn  justify="center" color=" aliceblue" style="color: #c8e4c2 ;"  class="mr-12 lighten-2" @click="guardar" small>
+                    <v-btn  justify="center" color=" aliceblue" style="color: #7ec76e ;"  class="mr-12 lighten-2" @click="guardar" small>
                         guardar
                     </v-btn>
                 </v-form>
                 
             </v-card-text>
             <div justify="center">
-                <v-toolbar dark prominent color="#c8e4c2" elevation="7">
+                <v-toolbar dark prominent color="#7ec76e" elevation="7">
                     <v-toolbar-title class="t">Listado de Dispositivos</v-toolbar-title>
 
                     <v-spacer></v-spacer>
@@ -248,7 +248,7 @@ export default {
 <style>
 .ti {
     color: rgb(8, 4, 4);
-    font-size: 26px;
+    font-size: 48px;
     font-family: "times new roman", cursive;
     text-align: center;
     float: center;
@@ -257,5 +257,10 @@ export default {
 .image {
     max-width: 350px;
     height: 200px;
+}
+.crearProducto {
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.5), rgba(226, 215, 215, 0.5)),
+    url("../../assets/fondo2.png");
 }
 </style>
