@@ -1,6 +1,6 @@
 <template>
     <v-row justify="center" class="crearProducto">
-    <v-card justify="center" max-width="500" style="background-color: transparent;">
+    <v-card justify="center" max-width="500" style="background-color: rgba(255, 255, 255, 0.5);">
                 <v-card-title class="text-center ti" > Crear Estado Equipo </v-card-title>
                 <v-row class="d-flex justify-center align-center">
                     <v-img class="image" src="https://pcpcsolutions.com/images/pcmantenimiento.png"></v-img>
@@ -19,7 +19,7 @@
                 </v-card-text>
 
         <div>
-        <v-toolbar  height="90px" dark prominent style="background-color: #a9e5eae5" elevation="7">
+        <v-toolbar  height="90px" dark prominent style="background-color: #a2ec92" elevation="7">
             <v-toolbar-title class=" text-center color-text">Listado de Estado Equipo</v-toolbar-title>
             <v-spacer></v-spacer>
         </v-toolbar>

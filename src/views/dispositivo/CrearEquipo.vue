@@ -1,6 +1,8 @@
 <template >
     <v-row  justify="center" class="crearProducto">
-        <v-card justify="center" max-width="1000" style="background-color: transparent;">
+        <v-card justify="center" max-width="1000" style="background-color: rgba(255, 255, 255, 0.5)
+
+        ;">
             <v-card-title class="ti"> Crear Equipo </v-card-title>
             <v-row class="d-flex justify-center align-center">
                 <v-img class="image" src="https://st2.depositphotos.com/1001877/5328/i/450/depositphotos_53286999-stock-photo-computer-devices-mobile-phone-laptop.jpg"></v-img>

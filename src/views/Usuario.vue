@@ -37,7 +37,7 @@
                 
               </v-text-field>
 
-              <v-select v-model="paquete.id_rol" :items="rolDb" item-text="rol" item-value="id"
+              <v-select v-model="paquete.id_rol" :items="rolDb" item-text="descripcion" item-value="id"
                 :rules="campoRules" label="Rol" required></v-select>
 
               <v-select v-model="paquete.id_estado" :items="estadosDb" item-text="estado" item-value="id"
