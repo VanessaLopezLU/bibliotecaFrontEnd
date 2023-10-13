@@ -1,6 +1,6 @@
-<template>
+<template >
     <v-row  justify="center" class="crearProducto">
-        <v-card justify="center" max-width="1000" style="background-color: #a4d299">
+        <v-card justify="center" max-width="1000" style="background-color: transparent;">
             <v-card-title class="ti"> Crear Equipo </v-card-title>
             <v-row class="d-flex justify-center align-center">
                 <v-img class="image" src="https://st2.depositphotos.com/1001877/5328/i/450/depositphotos_53286999-stock-photo-computer-devices-mobile-phone-laptop.jpg"></v-img>
@@ -25,25 +25,20 @@
                         :rules="campoRules" label="Estado" required>
                     </v-select>
 
-                   
 
-
-                        
-                 
-
-                    <v-btn  justify="center" color=" aliceblue" style="color: #c8e4c2 ;"  class="mr-12 lighten-2" @click="guardar" small>
+                    <v-btn  color="#28B463 " style="color: aliceblue ;"  class=" button mr-12 lighten-2" @click="guardar" small>
                         guardar
                     </v-btn>
                 </v-form>
                 
             </v-card-text>
             <div justify="center">
-                <v-toolbar dark prominent color="#c8e4c2" elevation="7">
+                <v-toolbar dark prominent  style="background-color:rgb(28, 219, 101);" elevation="7">
                     <v-toolbar-title class="t">Listado de Dispositivos</v-toolbar-title>
 
                     <v-spacer></v-spacer>
                 </v-toolbar>
-                <v-data-table :headers="headers" :items="datos" :items-per-page="5" class="elevation-1">
+                <v-data-table :headers="headers" :items="datos" :items-per-page="5" style="background-color: transparent;" class="elevation-1">
                     <template v-slot:item.actions="{ item }">
                         <v-icon small class="mr-2" @click="editItem(Object.assign({}, item))">
                             mdi-pencil
@@ -254,8 +249,17 @@ export default {
     float: center;
     
 }
+.crearProducto{
+    background-image: 
+      linear-gradient(rgba(255, 255, 255, 0.5), rgba(226, 215, 215, 0.5)),
+      url("../../assets/fondo2.png");
+  }
 .image {
     max-width: 350px;
     height: 200px;
 }
+.button{
+    justify-content: center;
+}
+
 </style>

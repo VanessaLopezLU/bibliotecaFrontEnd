@@ -1,36 +1,29 @@
 <template>
-    <v-card class="c" max-width="500" style="background-color: #89d8dde5">
-        <v-row>
-            <v-col>
+    <v-row justify="center" class="crearProducto">
+    <v-card justify="center" max-width="500" style="background-color: transparent;">
                 <v-card-title class="text-center ti" > Crear Estado Equipo </v-card-title>
                 <v-row class="d-flex justify-center align-center">
                     <v-img class="image" src="https://pcpcsolutions.com/images/pcmantenimiento.png"></v-img>
                 </v-row>
                 <v-divider></v-divider>
-
                 <v-card-text>
                     <v-form ref="form" v-model="valid" lazy-validation>
                         <v-text-field v-model="paquete.estado" :counter="10" :rules="campoRules" label="Estado"
                             required></v-text-field>
 
-                            <v-row class="d-flex justify-center">
+                            
                                 <v-btn color="success" class="w-33" @click="guardar" small>
                                     Guardar
                                 </v-btn>
-                            </v-row>
-
                     </v-form>
                 </v-card-text>
-            </v-col>
 
-        </v-row>
-
-        <v-row>
-        <v-toolbar  height="90px" dark prominent color="#a9e5eae5" elevation="16">
+        <div>
+        <v-toolbar  height="90px" dark prominent style="background-color: #a9e5eae5" elevation="7">
             <v-toolbar-title class=" text-center color-text">Listado de Estado Equipo</v-toolbar-title>
             <v-spacer></v-spacer>
         </v-toolbar>
-        <v-data-table :headers="headers" :items="datos" :items-per-page="5" class="elevation-1">
+        <v-data-table :headers="headers" :items="datos" :items-per-page="5" style="background-color: transparent;" class="elevation-1">
             
             
             <template v-slot:item.actions="{ item }">
@@ -58,8 +51,9 @@
             </v-card-text>
         </v-card>
         </v-dialog>
-    </v-row>
+        </div>
     </v-card>
+    </v-row>
    
 </template>
   
@@ -191,13 +185,17 @@ export default {
     max-width: 800px;
     margin: 0 auto;
 }
-
+.crearProducto{
+    background-image: 
+      linear-gradient(rgba(255, 255, 255, 0.5), rgba(226, 215, 215, 0.5)),
+      url("../../assets/fondo2.png");
+  }
 .ti {
-    font-size: 50px;
-    font-weight: 180px;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serifS;
+    color: rgb(8, 4, 4);
+    font-size: 26px;
+    font-family: "times new roman", cursive;
     text-align: center;
-}
+  }
 
 .image {
     max-width: 230px;

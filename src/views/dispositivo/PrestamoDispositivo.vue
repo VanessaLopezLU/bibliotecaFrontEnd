@@ -58,9 +58,8 @@
               </v-menu>
             </v-col>
             <v-col cols="12" md="6">
-              <v-select v-model="paquete.id_equipo" :items="equipoDB" item-text="Equipo" item-value="id"
-                        :rules="campoRules" label="Equipo" required>
-                    </v-select>
+             
+              
             </v-col>
             <v-col cols="12" md="6">
               <v-text-field v-model="paquete.cantidad" label="Cantidad"></v-text-field>
@@ -169,7 +168,7 @@ export default {
        
         
         async listarEquipo() {
-            await axios.get('localhost:3000/equipo/estado').then(resp => {
+            await axios.get('localhost:3000/equipo/Estado').then(resp => {
                 this.equipoDB = resp.data;
             })
         },
