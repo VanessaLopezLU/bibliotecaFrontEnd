@@ -113,12 +113,12 @@ export default {
       var vm = this;
       if (this.$refs.form.validate()) {
         this.paquete.cedula = parseInt(this.paquete.cedula, 15)
-        this.paquete.telefono = parseInt(this.paquete.telefono,20)
+        this.paquete.telefono = parseInt(this.paquete.telefono,22)
         axios
           .post("http://localhost:3000/user/crear",  this.paquete)
           .then(function (response) {
             
-            alert("guardado");
+            alert("guardado con exito");
             console.log(response);
             vm.cargar()
           })

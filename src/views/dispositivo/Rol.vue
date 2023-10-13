@@ -1,15 +1,13 @@
 <template>
-    <v-card class="c" max-width="500" style="background-color: #82E0AA">
-        <v-row>
-            <v-col>
-                <row  class="text-center ti">
-                    <v-card-title> Roles </v-card-title>
-                </row>
-                
-                <v-row class="d-flex justify-center align-center">
+    <v-row  justify="center" class="crearProducto">
+        <v-card justify="center" max-width="1000" style="background-color: rgba(255, 255, 255, 0.5);">
+            <v-row class="d-flex justify-center ti">
+             <v-card-title class=" ti"> Roles </v-card-title>
+            </v-row>
+                <v-row class="d-flex justify-center align-center" style="font-size: 48px;">
                     <v-img class="image" src="https://impulso06.com/wp-content/uploads/2023/02/Roles-en-un-equipo-de-trabajo-1024x1024.png"></v-img>
                 </v-row>
-                <v-divider></v-divider>
+               <br>
 
                 <v-card-text>
                     <v-form ref="form" v-model="valid" lazy-validation>
@@ -24,11 +22,9 @@
 
                     </v-form>
                 </v-card-text>
-            </v-col>
+                <br><br>
 
-        </v-row>
-
-        <v-row>
+       
         <v-toolbar  height="90px" dark prominent color="#ABEBC6" elevation="16">
             <v-toolbar-title class=" text-center color-text">Listado de Roles</v-toolbar-title>
             <v-spacer></v-spacer>
@@ -61,8 +57,9 @@
             </v-card-text>
         </v-card>
         </v-dialog>
-    </v-row>
+   
     </v-card>
+    </v-row>
    
 </template>
   
@@ -188,6 +185,11 @@ export default {
 </script>
   
 <style>
+.crearProducto{
+    background-image: 
+      linear-gradient(rgba(255, 255, 255, 0.5), rgba(226, 215, 215, 0.5)),
+      url("../../assets/fondo2.png");
+  }
 .c {
     background-color: white;
     border-radius: 10px;
@@ -198,9 +200,9 @@ export default {
 }
 
 .ti {
-    font-size: 48px;
+    font-size: 58px;
     font-weight: 180px;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serifS;
+    font-family:  Times, 'cursive';
     text-align: center;
 }
 

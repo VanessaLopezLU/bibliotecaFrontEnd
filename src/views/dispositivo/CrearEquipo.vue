@@ -32,10 +32,11 @@
 
                         
                  
-
+                    <v-row class="d-flex justify-center">
                     <v-btn  justify="center" color=" aliceblue" style="color: #a2ec92 ;"  class="mr-12 lighten-2" @click="guardar" small>
                         guardar
                     </v-btn>
+                    </v-row>
                 </v-form>
                 
             </v-card-text>
