@@ -1,5 +1,6 @@
 <template>
-    <v-card class="c" max-width="500" style="background-color: #D6EAF8">
+    <v-row justify="center" class="crearProducto">
+        <v-card justify="center"  class="card"  style="background-color: rgba(255, 255, 255, 0.5);">
         <v-row>
             <v-col>
                 <row  class="text-center ti">
@@ -17,7 +18,7 @@
                             required></v-text-field>
 
                             <v-row class="d-flex justify-center">
-                                <v-btn color="#85C1E9" class="w-33" @click="guardar" small>
+                                <v-btn color="#58D68D" class="w-33" @click="guardar" small>
                                     Guardar
                                 </v-btn>
                             </v-row>
@@ -28,14 +29,12 @@
 
         </v-row>
 
-        <v-row>
-        <v-toolbar  height="90px" dark prominent color="#A9CCE3" elevation="16">
+        <div>
+            <v-toolbar  height="90px" dark prominent style="background-color: #a2ec92" elevation="7">
             <v-toolbar-title class=" text-center color-text">Listado de Tipo Equipo</v-toolbar-title>
             <v-spacer></v-spacer>
         </v-toolbar>
-        <v-data-table :headers="headers" :items="datos" :items-per-page="5" class="elevation-1">
-            
-            
+        <v-data-table :headers="headers" :items="datos" :items-per-page="5" style="background-color: transparent;" class="elevation-1">
             <template v-slot:item.actions="{ item }">
                 <v-icon small class="mr-2" @click="editItem(Object.assign({}, item))">
                     mdi-pencil
@@ -61,8 +60,9 @@
             </v-card-text>
         </v-card>
         </v-dialog>
-    </v-row>
+    </div>
     </v-card>
+    </v-row> 
    
 </template>
   
@@ -211,6 +211,16 @@ export default {
     color: #04080cd5;
   }
 
-
+  .card{
+    width:50%;
+    height: 35%;
+    
+} 
+.crearProducto{
+    background-image: 
+      linear-gradient(rgba(255, 255, 255, 0.5), rgba(226, 215, 215, 0.5)),
+      url("../../assets/fondo2.png");
+      height: 300%;
+  }
 </style>
   

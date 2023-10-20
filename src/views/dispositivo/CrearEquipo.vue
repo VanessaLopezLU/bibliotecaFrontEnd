@@ -1,14 +1,17 @@
 <template >
     <v-row  justify="center" class="crearProducto">
-        <v-card justify="center" max-width="1000" style="background-color: rgba(255, 255, 255, 0.5)
-
-        ;">
-            <v-card-title class="ti"> Crear Equipo </v-card-title>
+        <v-card justify="center"  class="card"  style="background-color: rgba(255, 255, 255, 0.5);">
+        <br>
+        <v-row max-width="50%" class=" justify-center">
+            <v-card-title style="font-size: 50px; font-family:'Times New Roman', Times, cursive"> Crear Equipo </v-card-title>
+        </v-row>
+        <br>
+        <br>
             <v-row class="d-flex justify-center align-center">
                 <v-img class="image" src="https://st2.depositphotos.com/1001877/5328/i/450/depositphotos_53286999-stock-photo-computer-devices-mobile-phone-laptop.jpg"></v-img>
         
             </v-row>
-            <v-divider></v-divider>
+            <br>
             <v-card-text>
                 <v-form ref="form" v-model="valid" lazy-validation>
                     <v-text-field v-model="paquete.serial" :rules="campoRules" label="Serial" required>  
@@ -26,17 +29,14 @@
                     <v-select v-model="paquete.id_estado" :items="estadosDb" item-text="estado" item-value="id"
                         :rules="campoRules" label="Estado" required>
                     </v-select>
-
-                   
-
-
-                        
-                 
+                    <br>
                     <v-row class="d-flex justify-center">
-                    <v-btn  justify="center" color=" aliceblue" style="color: #a2ec92 ;"  class="mr-12 lighten-2" @click="guardar" small>
+                    <v-btn  height="35px" width="120px" justify="center" color=" aliceblue" style="color: #508d42 ;font-size: 18px"  class="mr-12 lighten-2" @click="guardar" small>
                         guardar
                     </v-btn>
+                    
                     </v-row>
+                    <br>
                 </v-form>
                 
             </v-card-text>
@@ -249,21 +249,21 @@ export default {
 };
 </script>
 <style>
-.ti {
-    color: rgb(8, 4, 4);
-    font-size: 48px;
-    font-family: "times new roman", cursive;
-    text-align: center;
-    float: center;
-    
-}
+ 
+
 .crearProducto{
     background-image: 
       linear-gradient(rgba(255, 255, 255, 0.5), rgba(226, 215, 215, 0.5)),
       url("../../assets/fondo2.png");
   }
 .image {
-    max-width: 350px;
-    height: 200px;
+    max-width: 400px;
+    height: 250px;
 }
+.card{
+    width:50%;
+    height: 35%;
+    
+}
+
 </style>

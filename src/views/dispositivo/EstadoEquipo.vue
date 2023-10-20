@@ -1,7 +1,8 @@
 <template>
     <v-row justify="center" class="crearProducto">
-    <v-card justify="center" max-width="500" style="background-color: rgba(255, 255, 255, 0.5);">
-                <v-card-title class="text-center ti" > Crear Estado Equipo </v-card-title>
+    <v-card justify="center"  class="card"  style="background-color: rgba(255, 255, 255, 0.5);">
+                <v-card-title class=" ti" > Crear Estado Equipo </v-card-title>
+                <br>
                 <v-row class="d-flex justify-center align-center">
                     <v-img class="image" src="https://pcpcsolutions.com/images/pcmantenimiento.png"></v-img>
                 </v-row>
@@ -10,11 +11,13 @@
                     <v-form ref="form" v-model="valid" lazy-validation>
                         <v-text-field v-model="paquete.estado" :counter="10" :rules="campoRules" label="Estado"
                             required></v-text-field>
-
-                            
-                                <v-btn color="success" class="w-33" @click="guardar" small>
+                            <br>
+                            <v-row class="d-flex justify-center">
+                                <v-btn height="35px" width="120px"  color="#2ECC71" style="color: #fff ;font-size: 18px"   class="w-33" @click="guardar" small>
                                     Guardar
                                 </v-btn>
+                            </v-row>
+                            <br>
                     </v-form>
                 </v-card-text>
 
@@ -76,9 +79,9 @@ export default {
 
         },
         headers: [
-            { text: "id", value: "id" },
+            { text: "Id", value: "id" },
 
-            { text: "estado", value: "estado" },
+            { text: "Estado", value: "estado" },
 
             { text: 'Actions', value: 'actions', sortable: false },
 
@@ -177,24 +180,18 @@ export default {
 </script>
   
 <style>
-.c {
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    max-width: 800px;
-    margin: 0 auto;
-}
+
 .crearProducto{
     background-image: 
       linear-gradient(rgba(255, 255, 255, 0.5), rgba(226, 215, 215, 0.5)),
       url("../../assets/fondo2.png");
+      height: 300%;
   }
 .ti {
     color: rgb(8, 4, 4);
-    font-size: 26px;
+    font-size: 36px;
     font-family: "times new roman", cursive;
-    text-align: center;
+    text-align: center !important;
   }
 
 .image {
@@ -203,9 +200,13 @@ export default {
 }
 
 .color-text {
-    color: #04080cd5;
+    color: #fff;
   }
-
+.card{
+    width:50%;
+    height: 35%;
+    
+}
 
 </style>
   

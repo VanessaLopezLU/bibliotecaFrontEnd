@@ -1,5 +1,6 @@
 <template>
-    <v-card class="c" max-width="500" style="background-color: #07b9ee" >
+    <v-row justify="center" class="crearProducto">
+    <v-card justify="center"  class="card"  style="background-color: rgba(255, 255, 255, 0.5);">
         <v-row>
             <v-col>
                 <row  class="text-center ti">
@@ -15,12 +16,13 @@
                     <v-form ref="form" v-model="valid" lazy-validation>
                         <v-text-field v-model="paquete.estado" :counter="10" :rules="campoRules" label="Estado"
                             required></v-text-field>
-
+                            <br>
                             <v-row class="d-flex justify-center">
-                                <v-btn color="success" class="w-33" @click="guardar" small>
+                                <v-btn  style="background-color:#6cd255" color="#fff" class="w-33" @click="guardar" small>
                                     Guardar
                                 </v-btn>
                             </v-row>
+                            <br>
 
                     </v-form>
                 </v-card-text>
@@ -29,8 +31,8 @@
 
         </v-row>
 
-        <v-row>
-        <v-toolbar  height="90px" dark prominent color="#A9CCE3" elevation="16">
+        <div>
+        <v-toolbar  height="90px" dark prominent style="background-color: #6cd255" elevation="16">
             <v-toolbar-title class=" text-center color-text">Lista de estados prestamo</v-toolbar-title>
             <v-spacer></v-spacer>
         </v-toolbar>
@@ -47,7 +49,7 @@
             </template>
         </v-data-table>
 
-        <v-dialog  height="700px" width="500px" v-model="dialogoEditar">
+        <v-dialog  height="500px" width="700px" v-model="dialogoEditar">
             <v-card>
             <v-card-text>
                 <v-form ref="formEditar"  lazy-validation>
@@ -62,8 +64,9 @@
             </v-card-text>
         </v-card>
         </v-dialog>
-    </v-row>
+        </div>
     </v-card>
+</v-row>
    
 </template>
   
@@ -188,14 +191,12 @@ export default {
 </script>
   
 <style>
-.c {
-    background-color: rgb(244, 239, 239);
-    border-radius: 10px;
-    box-shadow: 0px 2px 10px rgba(18, 14, 14, 0.1);
-    padding: 20px;
-    max-width: 800px;
-    margin: 0 auto;
-}
+.crearProducto{
+    background-image: 
+      linear-gradient(rgba(255, 255, 255, 0.5), rgba(226, 215, 215, 0.5)),
+      url("../../assets/fondo2.png");
+      height: 300%;
+  }
 
 .ti {
     font-size: 48px;
@@ -205,14 +206,18 @@ export default {
 }
 
 .image {
-    max-width: 300px;
+    max-width: 230px;
     height: 200px;
 }
 
 .color-text {
     color: #0e1114d5;
 }
-
+.card{
+    width:50%;
+    height: 35%;
+    
+}
 
 </style>
   

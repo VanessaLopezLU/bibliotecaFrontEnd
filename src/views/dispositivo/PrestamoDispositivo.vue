@@ -1,18 +1,18 @@
 <template>
-  <v-container justify="center" max-width="1000" style="background-color: #a4d299">
+  <v-row  justify="center" class="crearProducto">
+  <v-container justify="center" max-width="50%" >
     
-    <v-card elevation="2">
-      <v-card-title class="ti  green lighten-1">Formulario de Préstamo</v-card-title>
+    <v-card justify="center"  class="card"  style="background-color: rgba(255, 255, 255, 0.5);">
+      <br>
+      <v-row max-width="50%" class=" justify-center">
+      <v-card-title style="font-size: 50px; font-family:'Times New Roman', Times, cursive">Formulario de Préstamo</v-card-title>
+    </v-row>
       <v-card-text>
         <v-form ref="form">
           <v-row>
-            <v-col cols="12" md="6">
+            <v-col cols="12" md="12">
               <v-text-field v-model="paquete.cedula" label="Número de documento"></v-text-field>
             </v-col>
-            <v-col cols="12" md="6">
-              <v-text-field v-model="paquete.nombre" label="Nombres"></v-text-field>
-            </v-col>
-           
             <v-col cols="12" md="6">
               <v-menu v-model="menu" :close-on-content-click="false" transition="scale-transition" offset-y min-width="290px">
                 <template v-slot:activator="{ on }">
@@ -58,10 +58,13 @@
               </v-menu>
             </v-col>
             <v-col cols="12" md="6">
-             
+
+            <v-col cols="12" md="9">
+              <v-select v-model="paquete.id_tipo"  :items="tipoequipo" item-text="tipo" item-value="id" label="Tipo de equipo"> </v-select>
+            </v-col>
               
             </v-col>
-            <v-col cols="12" md="6">
+            <v-col cols="12" md="3">
               <v-text-field v-model="paquete.cantidad" label="Cantidad"></v-text-field>
             </v-col>
 
@@ -69,17 +72,37 @@
           </v-row>
         </v-form>
       </v-card-text>
-      <v-card-actions>
-        <v-spacer></v-spacer>
-        <div class="button">
-          <v-btn color="success" class="mr-8 lighten-2" @click="guardar" small>
-            Guardar
-          </v-btn>
-        </div>
-      </v-card-actions>
+      
+      <v-row class="d-flex justify-center">
+        <v-btn  height="35px" width="120px" justify="center" color=" aliceblue" style="color: #508d42 ;font-size: 18px"  class="mr-12 lighten-2" @click="guardar" small>
+          Guardar
+        </v-btn>
+      </v-row>
+      <br>
+      <br>
+      <div>
+      <v-toolbar  height="90px" dark prominent style="background-color: #6cd255" elevation="16">
+        <v-row style="margin-top: 10px; font-size: 39px;"   class="d-flex justify-center">
+        <v-toolbar-title class=" text-center color-text">Lista de estados prestamo</v-toolbar-title>
+      </v-row>
+    </v-toolbar>
+    <v-data-table :headers="headers" :items="datos" :items-per-page="5" class="elevation-1">
+        
+        
+        <template v-slot:item.actions="{ item }">
+            <v-icon small class="mr-2" @click="editItem(Object.assign({}, item))">
+                mdi-pencil
+            </v-icon>
+            <v-icon small @click="deleteItem(item.id)">
+                mdi-delete
+            </v-icon>
+        </template>
+    </v-data-table>
+  </div>
     </v-card>
   
   </v-container>
+</v-row>
 </template>
 
 <script>
@@ -104,6 +127,11 @@ export default {
         hora_prestamo: null,
         hora_devolucion: null,
 
+
+        tipoequipo:[],
+
+
+
         
         equipoDB: [],
 
@@ -116,17 +144,15 @@ export default {
         },
         headers: [
             { text: "Id", value: "id" },
-            { text: "Serial", value: "serial" },
-            {
-                text: "Descripcion",
-                align: "start",
-                sortable: false,
-                value: "descripcion",
-            },
-            { text: "Tipo", value: "id_tipo.tipo" },
-            { text: "Estado", value: "id_estado.estado" },
+            { text: "Cedula", value: "cedula" },
+            { text: "Fecha Prestamo", value: "fecha_devolucion" },
+            { text: "Fecha Devolucion", value: "fecha_devolucion" },
+            { text: "Tipo Equipo", value: "id_equipo.equipo"},
+            { text: "Cantidad", value: "cantidad"},
+            { text: "Estado Prestamo", value: "id_estadoprestamo.estado"},
             { text: 'Actions', value: 'actions', sortable: false},
             
+        
         ],
         datos: [],
     }),
@@ -170,6 +196,12 @@ export default {
         async listarEquipo() {
             await axios.get('localhost:3000/equipo/Estado').then(resp => {
                 this.equipoDB = resp.data;
+            })
+        },
+
+        async listartipoequipo() {
+            await axios.get( 'http://localhost:3000/tipo-equipo').then(resp => {
+                this.tipoequipo = resp.data;
             })
         },
         
@@ -233,6 +265,7 @@ export default {
     mounted() {
         this.cargar();
         this.listarEquipo();
+        this.listartipoequipo();
         var vm = this;
         axios
             .get("http://localhost:3000/prestamo")
@@ -265,6 +298,18 @@ export default {
   display: flex;
   justify-content: center;
 }
+.container {
+  max-width: 85% !important;
+}
+.crearProducto{
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.5), rgba(226, 215, 215, 0.5)),
+    url("../../assets/fondo2.png");
+     width: 110%;
+     height: 300%;
+
+}
+
 
 
 
