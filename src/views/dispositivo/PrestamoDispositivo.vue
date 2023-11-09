@@ -17,7 +17,7 @@
                   :rules="campoRules" label="Número de documento"></v-select>
               </v-col>
               <v-col cols="12" md="12">
-                <v-select v-model="paquete.id_estadoprestamo" :items="estadodB" item-text="estado" item-value="id"
+                <v-select v-model="paquete.id_estado" :items="estadodB" item-text="estado" item-value="id"
                   :rules="campoRules" label="Estado Prestamo"></v-select>
               </v-col>
               <v-col cols="12" md="6">
@@ -46,15 +46,14 @@
               ></v-text-field>
               </v-col>
               <v-col cols="12" md="6">
-
                 <v-col cols="12" md="9">
-                  <v-select v-model="detalle.id_tipo" :items="tipoequipo" item-text="tipo" item-value="id"
+                  <v-select v-model="detalleprestamo.id_tipo" :items="tipo_equipo" item-text="tipo" item-value="id"
                     label="Tipo de equipo"> </v-select>
                 </v-col>
 
               </v-col>
               <v-col cols="12" md="3">
-                <v-text-field v-model="detalle.cantidad"  type="number" label="Cantidad de equipo"></v-text-field>
+                <v-text-field v-model="detalleprestamo.cantidad"  type="number" label="Cantidad de equipo"></v-text-field>
               </v-col>
 
 
@@ -144,9 +143,9 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="(item, index) in paquete.detalle" :key="index">
+                  <tr v-for="(item, index) in paquete.detalleprestamo" :key="index">
                     <td class="text-center">
-                      {{ getDescripcionTipo(item.tipo) }}
+                      {{ getDescripcionTipo(item.id_tipo) }}
                     </td>
                     <td class="text-center">
                       {{ item.cantidad }}
@@ -170,8 +169,6 @@
             </v-row>
           </v-toolbar>
           <v-data-table :headers="headers" :items="datos" :items-per-page="5" class="elevation-1">
-
-
             <template v-slot:item.actions="{ item }">
               <v-icon small class="mr-2" @click="editItem(Object.assign({}, item))">
                 mdi-pencil
@@ -190,6 +187,8 @@
 
 <script>
 import axios from "axios";
+
+
 export default {
   data: () => ({
     rules: [
@@ -208,7 +207,7 @@ export default {
     showDatePickerDialog: false,
     showHoraInicioDialog: false,
     showHoraFinalDialog: false,
-    detalle: { tipo: null, cantidad: null },
+    detalleprestamo: { id_tipo: null, cantidad: null },
 
     paquete: {
       fecha_prestamo: null,
@@ -223,10 +222,9 @@ export default {
     nameRules: [(v) => !!v || "Campo requerido"],
 
 
-    tipoequipo: [],
+    
     estadodB: [],
     usuarioDB: [],
-    equipoDB: [],
 
     paqueteEditar: {
       id: null,
@@ -237,12 +235,10 @@ export default {
     },
     headers: [
       { text: "Id", value: "id" },
-      { text: "Cedula", value: "cedula" },
-      { text: "Fecha Prestamo", value: "fecha_devolucion" },
+      { text: "Cedula", value:"cedula.cedula" },
+      { text: "Fecha Prestamo", value: "fecha_prestamo" },
       { text: "Fecha Devolucion", value: "fecha_devolucion" },
-      { text: "Tipo Equipo", value: "id_equipo.equipo" },
-      { text: "Cantidad", value: "cantidad" },
-      { text: "Estado Prestamo", value: "id_estadoprestamo.estado" },
+      { text: "Estado Prestamo", value: "id_estado.estado" },
       { text: 'Actions', value: 'actions', sortable: false },
 
 
@@ -253,23 +249,27 @@ export default {
   watch: {
     horaInicio: {
       handler() {
-        this.paquete.fechaInicio = this.dates[0] + " " + this.horaInicio;
+        this.paquete.fecha_prestamo = this.dates[0] + " " + this.horaInicio;
       },
       deep: true,
     },
     horaFinal: {
       handler() {
-        this.paquete.fechaFinal = this.dates[1] + " " + this.horaFinal;
+        this.paquete.fecha_devolucion = this.dates[1] + " " + this.horaFinal;
       },
       deep: true,
     },
     dates: {
       handler() {
-        this.paquete.fechaInicio = this.dates[0] + " " + this.horaInicio;
-        this.paquete.fechaFinal = this.dates[1] + " " + this.horaFinal;
+        this.paquete.fecha_prestamo = this.dates[0] + " " + this.horaInicio;
+        this.paquete.fecha_devolucion = this.dates[1] + " " + this.horaFinal;
       },
       deep: true,
     },
+  },
+  created(){
+    this.listartipoequipo();
+
   },
   computed: {
     dateRangeText() {
@@ -278,17 +278,69 @@ export default {
   },
 
   methods: {
-    guardar() {
+    getDescripcionTipo(id){
+      const tipo = this.tipo_equipo.find ((te) =>  te.id===id);
+      return tipo ? tipo.tipo: "N/A";
+
+    },
+    async listartipoequipo() {
       var vm = this;
-      if (this.$refs.form.validate()) {
+      await axios.get('http://localhost:3000/tipo-equipo')
+      .then(function (response) {
+          // handle success
+          vm.tipo_equipo = response.data;
+          console.log(vm.tipo_equipo);
+        })
+        .catch(function (error) {
+          // handle error
+          console.log(error);
+        })
+        .finally(function () {
+          vm.$refs.form.reset();
+        });
+    },
+    guardar() {
+      if (
+        this.$refs.form.validate() &
+        (this.detalleprestamo.id_tipo != null) &
+        (this.detalleprestamo.cantidad != null)
+      ) {
+        this.paquete.detalleprestamo.push({ ...this.detalleprestamo });
+        this.detalleprestamo.id_tipo = null;
+        this.detalleprestamo.cantidad = null;
+      } else {
+        alert("Por favor llene todos los campos");
+      }
+    },
+    borrar(index) {
+      this.paquete.detalleprestamo.splice(index, 1);
+
+      alert("Borrado exitoso");
+    },
+    Prestar() {
+      var vm = this;
+      if (this.$refs.form.validate()){
         axios
           .post("http://localhost:3000/prestamo/crear", this.paquete)
           .then(function (response) {
-
             alert("guardado");
-            console.log(response)
             vm.cargar()
-
+            console.log(response);
+            if (response.data == "vacio") {
+                alert("No hay equipos disponibles");
+              } else {
+                if (response.data.numero > 0) {
+                  /* Swal.fire(
+                    " la cantidad de equipos disponible es:" +
+                      response.data.numero +
+                      "¿quieres prestarlos?"
+                  ); */
+                  vm.objConfimacion.numero = response.data.numero;
+                  vm.confirmacion = true;
+                } else {
+                  alert("Prestamo exitoso");
+                }
+              }
           })
           .catch(function (error) {
             // handle error
@@ -296,10 +348,26 @@ export default {
             console.log(error);
           })
           .finally(function () {
-            vm.$refs.form.reset();
+           /* vm.$refs.form.reset();*/
           });
+          
+      }else{
+        alert("Registre primero el prestamo");
       }
 
+    },
+    eliminarDetalle() {
+      var vm = this;
+      axios
+        .delete("http://localhost:3000/detalle-prestamo/", vm.objConfimacion.id)
+        .then(function (response) {
+          console.log(response);
+          alert("cancelacion exitosa");
+        })
+        .catch(function (error) {
+          console.log(error);
+        })
+        .finally(function () {});
     },
 
 
@@ -309,11 +377,7 @@ export default {
       })
     },
 
-    async listartipoequipo() {
-      await axios.get('http://localhost:3000/tipo-equipo').then(resp => {
-        this.tipoequipo = resp.data;
-      })
-    },
+  
     async listarusuario() {
       await axios.get('http://localhost:3000/user').then(resp => {
         this.usuarioDB = resp.data;
@@ -340,6 +404,7 @@ export default {
 
     async cargar() {
       var vm = this
+      this.listarusuario();
       await axios
         .get("http://localhost:3000/prestamo/")
         .then(function (response) {
@@ -365,22 +430,28 @@ export default {
         this.cargar();
 
       })
+    },reset() {
+      this.$refs.form.reset();
     },
-    async editarEquipo() {
-      try {
-        await axios.put('http://localhost:3000/prestamo/actualizar', this.paqueteEditar).then(() => {
-          this.dialogoEditar = false;
-          this.cargar()
-            ;
-        });
-
-      }
-      catch (error) {
-        this.dialogoEditar = false;
-        alert(error);
-      }
-
-    }
+    resetValidation() {
+      this.$refs.form.resetValidation();
+    },
+    saveDateRange() {
+      this.showDatePickerDialog = false;
+    },
+    saveHoraInicio() {
+      this.showHoraInicioDialog = false;
+    },
+    cancelHoraInicio() {
+      this.showHoraInicioDialog = false;
+    },
+    saveHoraFinal() {
+      this.showHoraFinalDialog = false;
+    },
+    cancelHoraFinal() {
+      this.showHoraFinalDialog = false;
+    },
+   
   },
   mounted() {
     this.cargar();
