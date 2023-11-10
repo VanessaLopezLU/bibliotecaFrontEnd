@@ -9,7 +9,6 @@
             Préstamo</v-card-title>
         </v-row>
         <v-card-text>
-          {{ paquete }}
           <v-form ref="form">
             <v-row>
               <v-col cols="12" md="12">
@@ -138,7 +137,7 @@
                     <th class="text-center">Tipo de equipo</th>
                     <th class="text-center">Cantidad</th>
                     <th class="text-right">
-                      <v-btn class="mr-4" @click="Prestar">Prestar</v-btn>
+                      <v-btn height="38px" width="95px" justify="center" color=" aliceblue" style="color: #508d42 ;font-size: 18px"  class="mr-4" @click="Prestar">Prestar</v-btn>
                     </th>
                   </tr>
                 </thead>
@@ -162,25 +161,80 @@
         <br>
         <br>
         <div>
-
           <v-toolbar height="90px" dark prominent style="background-color: #6cd255" elevation="16">
             <v-row style="margin-top: 10px; font-size: 39px;" class="d-flex justify-center">
               <v-toolbar-title class=" text-center color-text">Lista de estados prestamo</v-toolbar-title>
             </v-row>
           </v-toolbar>
-          <v-data-table :headers="headers" :items="datos" :items-per-page="5" class="elevation-1">
+          <v-data-table :headers="headers"   :items="datos" :items-per-page="5" class="elevation-1">
             <template v-slot:item.actions="{ item }">
-              <v-icon small class="mr-2" @click="editItem(Object.assign({}, item))">
-                mdi-pencil
-              </v-icon>
-              <v-icon small @click="deleteItem(item.id)">
-                mdi-delete
-              </v-icon>
+              
+              <v-icon
+                  small
+                  class="mr-2"
+                  @click="guardarID(item)"
+                  v-bind="attrs"
+                  v-on="on"
+                >
+                  fas fa-eye
+                </v-icon>
+                <v-icon small @click="deleteItem(item.id)">
+                  mdi-delete
+                </v-icon>
             </template>
           </v-data-table>
         </div>
       </v-card>
 
+      <!--Modal de confirmacion  para  editar -->
+      <v-dialog v-model="dialog" max-width="700px">
+        <template>
+          <v-simple-table>
+            <template v-slot:default>
+              <thead>
+                <tr>
+                  <th class="text-left"> Id</th>
+                  <th class="text-left">Tipo</th>
+                  <th class="text-left">Serial del equipo</th>
+                  <th class="text-left">Fecha de prestamo</th>
+                  <th class="text-left">Fecha de devolucion</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(items, index) in datos2.detalleprestamo" :headers2="headers2" :key="items.id">
+                  <td>{{ datos2.id}}</td>
+                  <td>{{ datos2.detalleprestamo[index].equipo.id_tipo.tipo }} </td>
+                  <td>{{ datos2.detalleprestamo[index].equipo.serial}}</td>
+                  <td>{{ formatearFecha(datos2.fecha_prestamo) }}</td>
+                  <td>{{ formatearFecha(datos2.fecha_devolucion) }}</td>
+                </tr>
+              </tbody>
+            </template>
+          </v-simple-table>
+        </template>
+      </v-dialog>
+
+
+      <!-- Modal de confirmación para eliminar -->
+    <v-dialog v-model="dialog2" max-width="290">
+      <v-card>
+        <v-card-title class="text-h8">
+          Estas seguro de eliminar el equipo
+        </v-card-title>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="blue lighten-2"
+            text
+            @click="eliminar(), (dialog2 = false)"
+          >
+            Confirmar
+          </v-btn>
+          <v-btn color="indigo" text @click="dialog2 = false">Cancelar</v-btn>
+          <v-spacer></v-spacer>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
     </v-container>
   </v-row>
 </template>
@@ -208,6 +262,16 @@ export default {
     showHoraInicioDialog: false,
     showHoraFinalDialog: false,
     detalleprestamo: { id_tipo: null, cantidad: null },
+    dialog: false,
+    dialog2: false,
+    search:"",
+    paqueteEditar: {
+      id: null,
+      serial: null,
+      fecha_prestamo: null,
+      fecha_devolucion:null,
+     
+    },
 
     paquete: {
       fecha_prestamo: null,
@@ -219,31 +283,32 @@ export default {
       ],
 
     },
-    nameRules: [(v) => !!v || "Campo requerido"],
-
-
-    
+    nameRules: [(v) => !!v || "Campo requerido"], 
     estadodB: [],
     usuarioDB: [],
 
-    paqueteEditar: {
-      id: null,
-      serial: null,
-      descripcion: null,
-      id_estado: null,
-     
-    },
+    headers2:[
+        { text: "Id", value: "id" },
+        { text: "Serial", value: "serial" },
+        {text: 'Tipo', value: "equipo.id_tipo.tipo"},
+        { text: "Fecha Prestamo", value: "fecha_prestamo" },
+        { text: "Fecha Devolución", value: "fecha_devolucion" },
+        { text: "Actions", value: "actions", sortable: false }
+    ],
     headers: [
       { text: "Id", value: "id" },
       { text: "Cedula", value:"cedula.cedula" },
       { text: "Fecha Prestamo", value: "fecha_prestamo" },
       { text: "Fecha Devolucion", value: "fecha_devolucion" },
       { text: "Estado Prestamo", value: "id_estado.estado" },
+
       { text: 'Actions', value: 'actions', sortable: false },
 
 
     ],
     datos: [],
+    datos2:[],
+    
   }),
 
   watch: {
@@ -269,6 +334,7 @@ export default {
   },
   created(){
     this.listartipoequipo();
+    this.prestamo();
 
   },
   computed: {
@@ -278,6 +344,24 @@ export default {
   },
 
   methods: {
+    guardarID(item) {
+      this.datos2=item;
+      this.dialog= true;
+    },
+    async detalle(item) {
+      var vm = this;
+      await axios
+        .get(`${this.api}/detalle-prestamo/` + item)
+        .then(function (response) {
+          // handle success
+          vm.datos2 = response.data;
+          console.log(vm.datos2);
+        })
+        .catch(function (error) {
+          // handle error
+          console.log(error);
+        });
+    },
     getDescripcionTipo(id){
       const tipo = this.tipo_equipo.find ((te) =>  te.id===id);
       return tipo ? tipo.tipo: "N/A";
@@ -322,8 +406,8 @@ export default {
       if (this.$refs.form.validate()){
         axios
           .post("http://localhost:3000/prestamo/crear", this.paquete)
-          .then(function (response) {
-            alert("guardado");
+          .then( (response) => {
+            alert(response.data.respuesta);
             vm.cargar()
             console.log(response);
             if (response.data == "vacio") {
@@ -391,12 +475,12 @@ export default {
 
     editItem(item) {
       console.log(item);
-      this.dialogoEditar = true;
+      this.dialog = true;
 
       this.paqueteEditar = {
-        id_estado: item.id_estado.id,
-        id_tipo: item.id_tipo.id,
-        descripcion: item.descripcion,
+      
+        fecha_devolucion:item.fecha_devolucion,
+        fecha_prestamo: item.fecha_prestamo,
         serial: item.serial,
         id: item.id
       }
@@ -451,7 +535,26 @@ export default {
     cancelHoraFinal() {
       this.showHoraFinalDialog = false;
     },
-   
+    formatearFecha(fecha) {
+      const fechaObj = new Date(fecha);
+      const opcionesFecha = {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+      };
+      const opcionesHora = {
+        hour: "2-digit",
+        minute: "2-digit",
+      };
+
+      const fechaFormateada = fechaObj
+        .toLocaleDateString("en-US", opcionesFecha)
+        .replace(/\//g, "-"); // Reemplazar barras con guiones
+
+      const horaFormateada = fechaObj.toLocaleTimeString("en-US", opcionesHora);
+
+      return `${fechaFormateada} - ${horaFormateada}`;
+    },
   },
   mounted() {
     this.cargar();

@@ -13,12 +13,7 @@ const routes = [{
         import('../views/iniciarSesion.vue')
 
 },
-{
-    path: '/usuario',
-    name: 'Usuario',
-    component: () =>
-        import('../views/Usuario.vue')
-},
+
 {
     path: '/dashboard',
     name: 'Dashboard',
@@ -59,6 +54,7 @@ const routes = [{
             component: () =>
                 import('../views/dispositivo/TipoEquipo.vue'),
         },
+        
        
         {
             name: 'DashboardUsuario',
@@ -70,6 +66,12 @@ const routes = [{
             path: '/dashboard/rol',
             component: () =>
                 import('../views/dispositivo/Rol.vue'),
+        },
+        {
+            name: 'DashboarUsuarioCrear',
+            path: '/dashboard/usuariocrear',
+            component: () =>
+                import('../views/Usuario.vue')
         },
       
         {

@@ -79,6 +79,10 @@ export default {
         title: "Usuario",
         icon: "fas fa-user",
         child: [
+          {
+            href:  '/dashboard/usuariocrear',
+            title: "Registrar Usuario",
+          },
         
           {
             href: "/dashboard/rol",
@@ -90,7 +94,7 @@ export default {
           },
           {
             href:  '/dashboard/usuario',
-            title: "Registro Usuario",
+            title: "Listar Usuario",
           },
         ],
       },
