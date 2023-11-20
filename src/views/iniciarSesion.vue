@@ -54,8 +54,8 @@
                       >
                     </div>
                     <input
-                      v-model="usuario"
-                      type="text"
+                      v-model.number="paquete.cedula"
+                      type="number"
                       name=""
                       class="form-control input_user"
                       placeholder="Username"
@@ -70,7 +70,7 @@
                       >
                     </div>
                     <input
-                      v-model="contrasena"
+                      v-model="paquete.contrasena"
                       type="password"
                       name=""
                       class="form-control input_pass"
@@ -87,23 +87,8 @@
                     
                     
                   </div>
-                  <div
-                    class="d-flex justify-content-center mt-3 login_container"
-                    v-if="prueba == 1"
-                  >
-                    <vs-button class="btn login_btn" loading dark>
-                      Iniciar Sesión
-                    </vs-button>
-                  </div>
-                  <v-snackbar
-                    v-model="isBusy"
-                    :timeout="2000"
-                    absolute
-                    bottom
-                    color="blue"
-                  >
-                    {{ msg }}
-                  </v-snackbar>
+
+                 
                 </form>
               </div>
 
@@ -348,14 +333,17 @@
   </v-app>
 </template>
 <script>
+import  axios from 'axios';
 export default {
   name: "App",
   data: () => ({
+    valid: true,
+    
+    
     active: "home",
     dialog: false,
-    usuario: "",
     noti: null,
-    contrasena: "",
+    
     error: false,
     msg: "",
     isBusy: false,
@@ -379,6 +367,11 @@ export default {
         flex: 6,
       },
     ],
+    paquete: {
+      cedula: null,
+      contrasena: null
+    },
+      
 
     slider: [
       {
@@ -408,11 +401,35 @@ export default {
   }),
 
   methods: {
-    login() {
-      this.$router.push("dashboard/welcome");
+  
+    async login(){
+      var vm = this;
+      
+        axios
+          .post("http://localhost:3000/user/login", vm.paquete)
+          .then(function (response){
+            console.log(response);
+            if(response.data != ""){
+              vm.$router.push("dashboard/welcome");
+            } else{
+              alert("usuario no resgistrado");
+            }
+           
+    
+          })
+          .catch(function (error) {
+              alert(error);
+              console.log(error);
+          })
+          .finally(function () {
+             vm.$refs.form.reset();
+          });
+      }
+
     },
+
+
    
-  },
 };
 </script>
 

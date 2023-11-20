@@ -43,6 +43,12 @@ const routes = [{
                 import('../views/dispositivo/PrestamoDispositivo.vue'),
         },
         {
+            name: 'DashboardEntregaPrestamo',
+            path: '/dashboard/entregaprestamo',
+            component: () =>
+                import('../views/dispositivo/EntregaPrestamo.vue'),
+        },
+        {
             name: 'DashboardEstadoEquipo',
             path: '/dashboard/estadoequipo',
             component: () =>
@@ -86,10 +92,8 @@ const routes = [{
             component: () =>
                 import('../views/dispositivo/EstadoPrestamo.vue'),
         },
+     
         
-
-
-
 
     ],
 },

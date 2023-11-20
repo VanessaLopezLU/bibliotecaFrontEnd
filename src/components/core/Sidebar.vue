@@ -122,6 +122,10 @@ export default {
             title: "Estado Prestamo",
           },
           {
+            href: "/dashboard/EntregaPrestamo",
+            title: "Entrega Prestamo",
+          },
+          {
             href: "",
             title: "Cancelacion",
           },
