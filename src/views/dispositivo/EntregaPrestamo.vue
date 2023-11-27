@@ -1,58 +1,63 @@
 <template>
-    <v-card justify="center" class="crearProducto">
+    <v-card justify="center" class="crearProducto" >
         <v-row max-width="50%" class=" justify-center">
             <v-card-title style="font-size: 40px; font-family:'Times New Roman', Times, cursive">
                 Entrega De Dispositivos
             </v-card-title>
         </v-row>
+        <br>
         <hr>
-        <div class="input">
+       <center> <div class="input">
             <h5>Cedula
-                <input class="mi-input" placeholder="" />
-                    <v-btn height="30px" color=" aliceblue" style="color: #508d42 ;font-size: 18px"
-                      class="button" @click="guardar" small>
-                      Guardar
+             <input  v-model.number="paquete.cedula" class="mi-input" placeholder="">
+                    <v-btn height="35px" color=" aliceblue" style="color: #508d42 ;font-size: 18px"
+                      class="button" @click="Buscar" small>
+                      Buscar
                     </v-btn>
                 
             </h5>
+        
             <hr>
-        </div>
+        </div></center>
         <br>
-        <h5>Prestamos</h5>
+        <center><h5 style="font-size: 36px; font-family:'Times New Roman', Times, serif">Prestamos</h5></center> 
         <v-container>
-            <v-data-table :headers="headers" :items="data" class="tbl">
-                <template v-slot:item.serial="{ item }">
-                    {{ item.serial }}
-                </template>
-                <template v-slot:item.fecha_prestamo="{ item }">
-                    {{ item.fecha_prestamo }}
-                </template>
-                <template v-slot:item.fecha_devolucion="{ item }">
-                    {{ item.fecha_devolucion }}
-                </template>
-                <template v-slot:item.accion="{ item }">
-                    <v-icon @click="editarItem(item)">mdi-pencil</v-icon>
-                </template>
-            </v-data-table>
+                <v-data-table :headers="headers"   :items="datos" :items-per-page="5" class="elevation-1">
+                  <template v-slot:item.actions="{ item }">
+                    
+                    <v-icon
+                        small
+                        class="mr-2"
+                        @click="detalle(item)"
+                        v-bind="attrs"
+                        v-on="on"
+                      >
+                        fas fa-check
+                      </v-icon>
+                      
+                  </template>
+                </v-data-table>
+           
         </v-container>
         <br>
         <hr>
-        <h5>Detalle Prestamos</h5>
-        <v-container>
-            <v-data-table :headers="headers" :items="data" class="tbl">
-                <template v-slot:item.serial="{ item }">
-                    {{ item.serial }}
+       <center> <h5 style="font-size: 35px; font-family:'Times New Roman', Times, serif">Detalle Prestamos</h5></center> 
+        <v-container >
+            <v-data-table :headers="headers2"   :items="datos2" :items-per-page="5" class="elevation-1">
+                <template v-slot:items.actions="{ item }">
+                  
+                  <v-icon
+                      small
+                      class="mr-2"
+                      @click="detalle(item)"
+                      v-bind="attrs"
+                      v-on="on"
+                    >
+                      fas fa-check
+                    </v-icon>
+                    
                 </template>
-                <template v-slot:item.fecha_prestamo="{ item }">
-                    {{ item.fecha_prestamo }}
-                </template>
-                <template v-slot:item.fecha_devolucion="{ item }">
-                    {{ item.fecha_devolucion }}
-                </template>
-                <template v-slot:item.accion="{ item }">
-                    <v-icon @click="eliminarItem(item)">mdi-delete</v-icon>
-                </template>
-            </v-data-table>
+              </v-data-table>
         </v-container>
         <br>
         <v-btn height="30px" color=" aliceblue" style="color: #508d42 ;font-size: 18px"
@@ -65,20 +70,91 @@
 </template>
   
 <script>
+import axios from 'axios';
 export default {
-    data() {
-        return {
-            headers: [
-                { text: 'Serial', value: 'serial' },
-                { text: 'Fecha Prestamo', value: 'fecha_prestamo' },
-                { text: 'Fecha Devolucion', value: 'fecha_devolucion' },
-                { text: 'Acción', value: 'accion' },
-            ],
-            data: [],
-        };
-    },
-    methods: {
+    data: () => ({
+    dialogoEditar:false,
+        valid: true,
 
+        campoRules: [(v) => !!v || "Campo Requerido"],
+
+        paquete: {
+            cedula: null,
+        },
+       
+      headers: [
+      { text: "Id", value: "id" },
+      { text: "Cedula", value:"cedula.cedula" },
+      { text: "Fecha Prestamo", value: "fecha_prestamo" },
+      { text: "Fecha Devolucion", value: "fecha_devolucion" },
+      { text: "Estado Prestamo", value: "id_estado.estado" },
+      { text: 'Actions', value: 'actions', sortable: false }
+    ],
+    headers2:[
+        { text: "Serial", value: "equipo.serial" },
+        {text: 'Tipo', value: "equipo.descripcion"},
+        { text: "Fecha Prestamo", value: "fecha_prestamo" },
+        { text: "Fecha Devolución", value: "fecha_devolucion" },
+    ],
+        datos: [],
+        datos2:[],
+    }),
+    methods: {
+        Buscar() {
+            var vm = this;
+           
+                axios
+                    .get("http://localhost:3000/prestamo/obtenerPorCedula/"+ this.paquete.cedula)
+                    .then(function (response) {
+        
+                        alert("guardado");
+                        console.log(response)
+                        vm.cargar()
+                        
+                    })
+                    .catch(function (error) {
+                        // handle error
+                        alert(error);
+                        console.log(error);
+                    })
+                    .finally(function () {
+                        vm.$refs.form.reset();
+                    });
+
+        },
+        async cargar() {
+            var vm = this
+            await axios
+                .get("http://localhost:3000/prestamo/")
+                .then(function (response) {
+                    // handle success
+                    vm.datos = response.data;
+                    console.log(vm.datos);
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log(error);
+                })
+                .finally(function () {
+                    // always executed
+                });
+
+
+        },
+       async detalle(item) {
+       var vm= this;
+         axios
+        .get("http://localhost:3000/detalle-prestamo/"+ item.id)
+        .then(function (response) {
+          // handle success
+          vm.datos2 = response.data;
+          console.log(vm.datos2);
+        })
+        .catch(function (error) {
+          // handle error
+          console.log(error);
+        });
+    },
 
 
         realizarAccion(item) {
@@ -96,6 +172,24 @@ export default {
 
 
     },
+    mounted() {
+        this.cargar();
+        var vm = this;
+        axios
+            .get("http://localhost:3000/prestamo")
+            .then(function (response) {
+                // handle success
+                vm.datos = response.data;
+                console.log(response);
+            })
+            .catch(function (error) {
+                // handle error
+                console.log(error);
+            })
+            .finally(function () {
+                // always executed
+            });
+    }
 };
 </script>
   
