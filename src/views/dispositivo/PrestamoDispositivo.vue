@@ -208,6 +208,7 @@
                   <td>{{ formatearFecha(datos2.fecha_prestamo) }}</td>
                   <td>{{ formatearFecha(datos2.fecha_devolucion) }}</td>
                 </tr>
+               
               </tbody>
             </template>
           </v-simple-table>
@@ -287,14 +288,7 @@ export default {
     estadodB: [],
     usuarioDB: [],
 
-    headers2:[
-        { text: "Id", value: "id" },
-        { text: "Serial", value: "serial" },
-        {text: 'Tipo', value: "equipo.id_tipo.tipo"},
-        { text: "Fecha Prestamo", value: "fecha_prestamo" },
-        { text: "Fecha Devolución", value: "fecha_devolucion" },
-        { text: "Actions", value: "actions", sortable: false }
-    ],
+  
     headers: [
       { text: "Id", value: "id" },
       { text: "Cedula", value:"cedula.cedula" },
@@ -305,6 +299,14 @@ export default {
       { text: 'Actions', value: 'actions', sortable: false },
 
 
+    ],
+    headers2:[
+        { text: "Id", value: "id" },
+        { text: "Serial", value: "detalle.equipo.serial" },
+        {text: 'Tipo', value: "detalle.equipo.tipo"},
+        { text: "Fecha Prestamo", value: "fecha_prestamo" },
+        { text: "Fecha Devolución", value: "fecha_devolucion" },
+        { text: "Actions", value: "actions", sortable: false }
     ],
     datos: [],
     datos2:[],
@@ -351,11 +353,12 @@ export default {
     async detalle(item) {
       var vm = this;
       await axios
-        .get(`${this.api}/detalle-prestamo/` + item)
+        .get("http://localhost:3000/detalle-prestamo/" + item)
         .then(function (response) {
           // handle success
           vm.datos2 = response.data;
           console.log(vm.datos2);
+          
         })
         .catch(function (error) {
           // handle error

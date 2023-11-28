@@ -106,10 +106,9 @@ export default {
                 axios
                     .get("http://localhost:3000/prestamo/obtenerPorCedula/"+ this.paquete.cedula)
                     .then(function (response) {
-        
-                        alert("guardado");
                         console.log(response)
-                        vm.cargar()
+                        vm.datos = response.data;
+                        
                         
                     })
                     .catch(function (error) {
@@ -122,7 +121,7 @@ export default {
                     });
 
         },
-        async cargar() {
+       /* async cargar() {
             var vm = this
             await axios
                 .get("http://localhost:3000/prestamo/")
@@ -140,7 +139,7 @@ export default {
                 });
 
 
-        },
+        },*/
        async detalle(item) {
        var vm= this;
          axios
@@ -172,24 +171,7 @@ export default {
 
 
     },
-    mounted() {
-        this.cargar();
-        var vm = this;
-        axios
-            .get("http://localhost:3000/prestamo")
-            .then(function (response) {
-                // handle success
-                vm.datos = response.data;
-                console.log(response);
-            })
-            .catch(function (error) {
-                // handle error
-                console.log(error);
-            })
-            .finally(function () {
-                // always executed
-            });
-    }
+  
 };
 </script>
   
