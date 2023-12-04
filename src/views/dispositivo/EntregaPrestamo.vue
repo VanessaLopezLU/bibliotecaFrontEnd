@@ -60,6 +60,7 @@
               </v-data-table>
         </v-container>
         <br>
+        {{ estado }}
         <v-btn height="30px" color=" aliceblue" style="color: #508d42 ;font-size: 18px"
         class="button2" @click="procesar" small>
         Procesar
@@ -80,6 +81,10 @@ export default {
 
         paquete: {
             cedula: null,
+        },
+        estado:{
+            idPrestamo: null,
+            id:  3,
         },
        
       headers: [
@@ -140,6 +145,23 @@ export default {
 
 
         },*/
+        
+    procesar() {
+    var vm = this;
+
+    // Actualizar el estado del préstamo
+    axios.put("http://localhost:3000/prestamo/actualizar/" + vm.estado.idPrestamo,  this.estado)
+        .then(function (response) {
+            console.log('Estado del préstamo actualizado:', response.data);
+            vm.datos = response.data;
+        })
+        .catch(function (error) {
+            console.error('Error al actualizar el estado:', error);
+            console.log( vm.estado.id.estado);
+            alert('Error al actualizar el estado del préstamo. Por favor, inténtelo de nuevo.');
+        });
+},
+
        async detalle(item) {
        var vm= this;
          axios
@@ -147,7 +169,8 @@ export default {
         .then(function (response) {
           // handle success
           vm.datos2 = response.data;
-          console.log(vm.datos2);
+          vm.estado.idPrestamo= item.id;
+          
         })
         .catch(function (error) {
           // handle error
@@ -165,6 +188,8 @@ export default {
                 this.data.splice(index, 1);
             }
         },
+
+
 
 
 
