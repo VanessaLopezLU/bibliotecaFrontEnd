@@ -49,6 +49,12 @@ const routes = [{
                 import('../views/dispositivo/EntregaPrestamo.vue'),
         },
         {
+            name: 'DashboardDevolucionPrestamo',
+            path: '/dashboard/devolucionprestamo',
+            component: () =>
+                import('../views/dispositivo/DevolucionPrestamo.vue'),
+        },
+        {
             name: 'DashboardEstadoEquipo',
             path: '/dashboard/estadoequipo',
             component: () =>

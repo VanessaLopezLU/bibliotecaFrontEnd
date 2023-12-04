@@ -126,6 +126,10 @@ export default {
             title: "Entrega Prestamo",
           },
           {
+            href: "/dashboard/DevolucionPrestamo",
+            title: "Devolucion Prestamo",
+          },
+          {
             href: "",
             title: "Cancelacion",
           },

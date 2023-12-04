@@ -1,6 +1,6 @@
 <template>
   <v-row justify="center" class="crearProducto">
-    <v-container justify="center" max-width="70%">
+    <v-container justify="center" max-width="100%">
 
       <v-card justify="center" class="card" style="background-color: rgba(255, 255, 255, 0.5);">
         <br>

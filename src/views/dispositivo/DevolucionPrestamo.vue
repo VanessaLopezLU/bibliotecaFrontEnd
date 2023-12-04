@@ -2,7 +2,7 @@
     <v-card justify="center" class="crearProducto" >
         <v-row max-width="50%" class=" justify-center">
             <v-card-title style="font-size: 40px; font-family:'Times New Roman', Times, cursive">
-                Entrega De Dispositivos
+                Devolucion De Dispositivos
             </v-card-title>
         </v-row>
         <br>
@@ -84,10 +84,8 @@ export default {
        
       headers: [
       { text: "Id", value: "id" },
-      { text: "Cedula", value:"cedula.cedula" },
       { text: "Fecha Prestamo", value: "fecha_prestamo" },
       { text: "Fecha Devolucion", value: "fecha_devolucion" },
-      { text: "Estado Prestamo", value: "id_estado.estado" },
       { text: 'Actions', value: 'actions', sortable: false }
     ],
     headers2:[
@@ -95,6 +93,8 @@ export default {
         {text: 'Tipo', value: "equipo.id_tipo.tipo"},
         { text: "Fecha Prestamo", value: "fecha_prestamo" },
         { text: "Fecha Devolución", value: "fecha_devolucion" },
+        { text: 'Actions', value: 'actions', sortable: true },
+        { text: 'Actions', value: 'actions', sortable: false }
     ],
         datos: [],
         datos2:[],
@@ -104,11 +104,11 @@ export default {
             var vm = this;
            
                 axios
-                    .get("http://localhost:3000/prestamo/obtenerPorCedula/"+ this.paquete.cedula)
+                    .get("http://localhost:3000/prestamo/obtenerPorCedula/prestado"+ this.paquete.cedula)
                     .then(function (response) {
                         console.log(response)
                         vm.datos = response.data;
-                        
+                         
                         
                     })
                     .catch(function (error) {
