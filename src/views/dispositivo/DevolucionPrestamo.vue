@@ -20,7 +20,7 @@
             <hr>
         </div></center>
         <br>
-        <center><h5 style="font-size: 36px; font-family:'Times New Roman', Times, serif">Prestamos</h5></center> 
+        <center><h5 style="font-size: 36px; font-family:'Times New Roman', Times, serif">Prestamo</h5></center> 
         <v-container>
                 <v-data-table :headers="headers"   :items="datos" :items-per-page="5" class="elevation-1">
                   <template v-slot:item.actions="{ item }">
@@ -41,31 +41,54 @@
         </v-container>
         <br>
         <hr>
-       <center> <h5 style="font-size: 35px; font-family:'Times New Roman', Times, serif">Detalle Prestamos</h5></center> 
+       <center> <h5 style="font-size: 35px; font-family:'Times New Roman', Times, serif">Detalle</h5></center> 
         <v-container >
-            <v-data-table :headers="headers2"   :items="datos2" :items-per-page="5" class="elevation-1">
-                <template v-slot:items.actions="{ item }">
-                  
-                  <v-icon
-                      small
-                      class="mr-2"
-                      @click="detalle(item)"
-                      v-bind="attrs"
-                      v-on="on"
-                    >
-                      fas fa-check
-                    </v-icon>
-                    
+            <template>
+                <div class="borde">
+                  <v-simple-table>
+                    <template v-slot:default>
+                      <thead>
+                        <tr>
+                          <th class="text-left">Tipo de equipo</th>
+                          <th class="text-left">Serial del equipo</th>
+                          <th class="text-left">Estado del equipo</th>
+                          <th class="text-left">Observacion</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-for="(item, index) in datos2" :key="item.index">
+                          <td>{{ item.equipo.id_tipo.tipo }}</td>
+                          <td>{{ item.equipo.serial }}</td>
+                          <td>
+                            <v-select v-model="NovedadN[index].estado" :items="estadoN" item-text="estado" item-value="id"
+                                 :rules="campoRules" label="Estado " required>
+                            </v-select>
+                          </td>
+          
+                          <td>
+                            <v-textarea
+                              v-model="NovedadN[index].novedad"
+                              type="text"
+                              label="Obsevacion"
+                            ></v-textarea>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </template>
+                   
+                   </v-simple-table>
+                </div>
                 </template>
-              </v-data-table>
         </v-container>
         <br>
+       
         <v-btn height="30px" color=" aliceblue" style="color: #508d42 ;font-size: 18px"
-        class="button2" @click="procesar" small>
+        class="button2" @click="procesar()" small>
         Procesar
       </v-btn>
         <br>
         <br>
+        {{ NovedadN }}
     </v-card>
 </template>
   
@@ -81,45 +104,52 @@ export default {
         paquete: {
             cedula: null,
         },
+        paqueteE:{
+            id_estado: null,
+        },
        
-      headers: [
-      { text: "Id", value: "id" },
-      { text: "Fecha Prestamo", value: "fecha_prestamo" },
-      { text: "Fecha Devolucion", value: "fecha_devolucion" },
-      { text: 'Actions', value: 'actions', sortable: false }
-    ],
-    headers2:[
-        { text: "Serial", value: "equipo.serial" },
-        {text: 'Tipo', value: "equipo.id_tipo.tipo"},
-        { text: "Fecha Prestamo", value: "fecha_prestamo" },
-        { text: "Fecha Devolución", value: "fecha_devolucion" },
-        { text: 'Actions', value: 'actions', sortable: true },
-        { text: 'Actions', value: 'actions', sortable: false }
-    ],
+        headers: [
+            { text: "Id", value: "id" },
+            { text: "Cedula", value: "cedula.cedula" },
+            { text: "Fecha Prestamo", value: "fecha_prestamo" },
+            { text: "Fecha Devolucion", value: "fecha_devolucion" },
+            { text: "Estado Prestamo", value: "id_estado.estado" },
+            { text: 'Actions', value: 'actions', sortable: false }
+        ],
+  
         datos: [],
         datos2:[],
+        estados: [],
+        estadoN:[],
+        NovedadN: [],
+        idNovedades:[]
+
     }),
     methods: {
         Buscar() {
             var vm = this;
-           
-                axios
-                    .get("http://localhost:3000/prestamo/obtenerPorCedula/prestado"+ this.paquete.cedula)
-                    .then(function (response) {
-                        console.log(response)
-                        vm.datos = response.data;
-                         
-                        
-                    })
-                    .catch(function (error) {
-                        // handle error
-                        alert(error);
-                        console.log(error);
-                    })
-                    .finally(function () {
-                        vm.$refs.form.reset();
-                    });
 
+            axios
+                .get("http://localhost:3000/prestamo/obtenerPorCedula/" + this.paquete.cedula)
+                .then(function (response) {
+                    console.log(response)
+                    vm.datos = response.data;
+
+                  
+
+
+                })
+                .catch(function (error) {
+                    // handle error
+                    alert(error);
+                    console.log(error);
+                })
+
+        },
+        async listarEstados() {
+            await axios.get('http://localhost:3000/estado-equipo/').then(resp => {
+                this.estadoN = resp.data;
+            })
         },
        /* async cargar() {
             var vm = this
@@ -141,18 +171,19 @@ export default {
 
         },*/
        async detalle(item) {
-       var vm= this;
-         axios
-        .get("http://localhost:3000/detalle-prestamo/"+ item.id)
-        .then(function (response) {
-          // handle success
-          vm.datos2 = response.data;
-          console.log(vm.datos2);
-        })
-        .catch(function (error) {
-          // handle error
-          console.log(error);
-        });
+           this.datos2 = item.detalleprestamo;
+         this.NovedadN = [];
+         item.detalleprestamo.forEach(detalle => {
+            this.NovedadN.push({
+                prestamo: item.id,
+                novedad: "",
+                equipo: detalle.equipo.id,
+                estado: detalle.equipo.id_estado.id,
+                estado_prestamo: 3,
+
+            })
+         });
+        
     },
 
 
@@ -165,12 +196,26 @@ export default {
                 this.data.splice(index, 1);
             }
         },
+        async procesar() {
+            try {
+                await axios.post("http://localhost:3000/novedad/crear", this.NovedadN).then(() => {
+                    alert("Se creo");
+                })
+            }
+            catch(error) {
+                console.log(error);
+            }
+        }
 
 
 
 
 
     },
+    mounted() {
+        this.listarEstados();
+    },
+    
   
 };
 </script>

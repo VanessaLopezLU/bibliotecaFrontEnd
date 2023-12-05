@@ -1,8 +1,10 @@
 <template>
-    <v-card class="c" max-width="500" style="background-color: #8cd3b9">
+    <v-row justify="center" class="crearProducto">
+        <v-card justify="center"  class="card"  style="background-color: rgba(255, 255, 255, 0.5);">
         <v-row>
             <v-col>
-                <v-card-title class="text-center ti" > Estado Usuario </v-card-title>
+                <v-card-title class="text-center ti" > Estado Usuario
+                 </v-card-title>
                 <v-row class="d-flex justify-center align-center">
                     <v-img class="image" src="https://pcpcsolutions.com/images/pcmantenimiento.png"></v-img>
                 </v-row>
@@ -13,20 +15,18 @@
                         <v-text-field v-model="paquete.estado" :counter="10" :rules="campoRules" label="Estado"
                             required></v-text-field>
 
-                            <v-row class="d-flex justify-center">
+                           
                                 <v-btn color="success" class="w-33" @click="guardar" small>
                                     Guardar
                                 </v-btn>
-                            </v-row>
+                            
 
                     </v-form>
                 </v-card-text>
             </v-col>
 
         </v-row>
-
-        <v-row>
-        <v-toolbar  height="90px" dark prominent color="#A2D9CE" elevation="16">
+   <v-toolbar  height="90px" dark prominent color="#A2D9CE" elevation="12">
             <v-toolbar-title class=" text-center color-text">Listado de Estado Usuario</v-toolbar-title>
             <v-spacer></v-spacer>
         </v-toolbar>
@@ -42,6 +42,9 @@
                 </v-icon>
             </template>
         </v-data-table>
+        <v-row>
+     
+      
 
         <v-dialog  height="500px" width="700px" v-model="dialogoEditar">
             <v-card>
@@ -60,6 +63,7 @@
         </v-dialog>
     </v-row>
     </v-card>
+</v-row>
    
 </template>
   
@@ -183,14 +187,13 @@ export default {
 </script>
   
 <style>
-.c {
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    max-width: 800px;
-    margin: 0 auto;
-}
+.crearProducto{
+    background-image: 
+      linear-gradient(rgba(255, 255, 255, 0.5), rgba(226, 215, 215, 0.5)),
+      url("../../assets/fondo2.png");
+      height: 300%;
+  }
+
 
 .ti {
     font-size: 50px;

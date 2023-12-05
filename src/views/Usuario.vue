@@ -12,7 +12,7 @@
 
           <v-card-text>
             <v-form ref="form" v-model="valid" lazy-validation>
-              <v-text-field v-model="paquete.cedula" type="number" :rules="campoRules" label="Cedula" required>
+              <v-text-field v-model.number="paquete.cedula" type="number" :rules="campoRules" label="Cedula" required>
               </v-text-field>
 
               <v-text-field v-model="paquete.nombre" :rules="campoRules" label="Nombre" required>
@@ -25,7 +25,7 @@
 
               </v-text-field>
 
-              <v-text-field v-model="paquete.telefono"  type="number" :rules="campoRules" label="Telefono" required>
+              <v-text-field v-model.number="paquete.telefono"  type="number" :rules="campoRules" label="Telefono" required>
 
               </v-text-field>
 
@@ -112,8 +112,7 @@ export default {
     guardar() {
       var vm = this;
       if (this.$refs.form.validate()) {
-        this.paquete.cedula = parseInt(this.paquete.cedula, 15)
-        this.paquete.telefono = parseInt(this.paquete.telefono,22)
+      
         axios
           .post("http://localhost:3000/user/crear",  this.paquete)
           .then(function (response) {
