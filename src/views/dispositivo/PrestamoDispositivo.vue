@@ -104,28 +104,7 @@
             </v-card-actions>
           </v-card>
         </v-dialog>
-        <!-- Modal del confirmacion -->
-        <v-dialog v-model="confirmacion">
-          <v-card class="modal">
-            <v-card-title class="text-uppercase"
-              >la contidad de dispositivos disponibles es:{{
-                objConfimacion.numero
-              }}
-              ¿quiere prestarlos?
-            </v-card-title>
-            <v-card-actions>
-              <v-btn color="blue lighten-2" text @click="confirmacion = false">
-                Confirmar
-              </v-btn>
-              <v-btn
-                color="indigo"
-                text
-                @click="(confirmacion = false), eliminarDetalle()"
-                >Cancelar</v-btn
-              >
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
+      
         <br>
         <template>
           <!--tabla de prestamos-->
@@ -251,7 +230,7 @@ export default {
       (value) => (value && value.length >= 3) || "Mínimo 3 caracteres",
     ],
     tipo_equipo: null,
-    api: `${process.env.VUE_APP_API_URL}:${process.env.VUE_APP_PORT}`,
+    
     valid: true,
     sheet: false,
     dates: ["", ""],
@@ -410,7 +389,7 @@ export default {
         axios
           .post("http://localhost:3000/prestamo/crear", this.paquete)
           .then( (response) => {
-            alert(response.data.respuesta);
+            
             vm.cargar()
             console.log(response);
             if (response.data == "vacio") {

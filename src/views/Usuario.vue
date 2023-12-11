@@ -21,7 +21,7 @@
               <v-text-field v-model="paquete.apellido" :rules="campoRules" label="Apellido" required>
               </v-text-field>
 
-              <v-text-field v-model="paquete.correo" :rules="campoRules" label="Correo" required>
+              <v-text-field   :rules="[rules.required, rules.email]" v-model="paquete.correo" label="Correo" required>
 
               </v-text-field>
 
@@ -32,10 +32,16 @@
               <v-text-field v-model="paquete.usuario" :rules="campoRules" label="Usuario" required>
 
               </v-text-field>
+             
 
-              <v-text-field v-model="paquete.contrasena" :rules="campoRules" label="Contrasena" required>
-                
-              </v-text-field>
+              <v-text-field
+              v-model="paquete.contrasena"  :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+              :type="show1 ? 'text' : 'password'"
+              :rules="[rules2.required, rules2.min]"
+              @click:append="show1 = !show1"
+              label="Contrasena"
+              required
+            ></v-text-field>
 
               <v-select v-model="paquete.id_rol" :items="rolDb" item-text="descripcion" item-value="id"
                 :rules="campoRules" label="Rol" required></v-select>
@@ -63,50 +69,52 @@ import axios from "axios";
 export default {
   data: () => ({
     valid: true,
-
+    email: '',
+    rules: {
+        required: value => !!value || 'Required.',
+        counter: value => value.length <= 20 || 'Max 20 characters',
+        email: value => {
+            const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            return pattern.test(value) || 'Invalid e-mail.'
+        }
+    },
+    show1: false,
+     contrasena: 'contrasena',
+      rules2: {
+        required: value => !!value || 'Required.',
+        min: v => v.length >= 8 || 'Min 8 characters'
+      },
     campoRules: [(v) => !!v || "Campo Requerido"],
 
     paquete:{
-      cedula: null,
-      nombre: null,
-      apellido: null,
-      correo: null,
-      telefono: null,
-      usuario: null,
-      contrasena: null,
-      id_rol: null,
-      id_estado: null
-
+        cedula: null,
+        nombre: null,
+        apellido: null,
+        correo: null,
+        telefono: null,
+        usuario: null,
+        contrasena: null,
+        id_rol: null,
+        id_estado: null
     },
     rolDb:[],
     estadosDb: [],
     
     headers: [
-      { text: "Cedula", value: "cedula" },
-
-      { text: "Nombre", value: "nombre" },
-
-      { text: "Apellido", value: "apellido" },
-
-      { text: "Correo", value: "correo" },
-
-      { text: "Telefono", value: "telefono" },
-
-      { text: "Usuario", value: "usuario" },
-
-      { text: "Contraseña", value: "contrasena" },
-
-      { text: "Rol", value: "id_rol.descripcion" },
-
-      { text: "Estado", value: "id_estado.estado" },
-
-      { text: 'Actions', value: 'actions', sortable: false },
-
+        { text: "Cedula", value: "cedula" },
+        { text: "Nombre", value: "nombre" },
+        { text: "Apellido", value: "apellido" },
+        { text: "Correo", value: "correo" },
+        { text: "Telefono", value: "telefono" },
+        { text: "Usuario", value: "usuario" },
+        { text: "Contraseña", value: "contrasena" },
+        { text: "Rol", value: "id_rol.descripcion" },
+        { text: "Estado", value: "id_estado.estado" },
+        { text: 'Actions', value: 'actions', sortable: false }
     ],
-    datos: [],
+    datos: []
+}),
 
-   
-  }),
 
   methods: {
     guardar() {

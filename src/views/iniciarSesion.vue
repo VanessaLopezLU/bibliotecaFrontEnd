@@ -195,36 +195,6 @@
           </v-card-actions>
         </v-card>
 
-        <v-card class="mx-auto carta2" max-width="500">
-          <v-img
-            class="white--text align-end"
-            height="400px"
-            width="500px"
-            src="https://cdn.computerhoy.com/sites/navi.axelspringer.es/public/media/image/2020/04/proyector-wimius-1915999.jpg"
-          >
-            <v-card-title>Prestamo de video beam</v-card-title>
-          </v-img>
-
-          <v-card-subtitle class="pb-0">
-            ¿Cómo se utilizan las video beam?
-          </v-card-subtitle>
-
-          <v-card-text class="text--primary">
-            <div>
-              Un proyector de vídeo utiliza una entrada de fuente de vídeo que
-              se transmite internamente a una pantalla pequeña. La luz brilla a
-              través de la pantalla, luego es capturada y enfocada por un
-              objetivo o varios objetivos para ser visualizada en una superficie
-              a una distancia determinada.
-            </div>
-          </v-card-text>
-
-          <v-card-actions>
-            <v-btn color="black" text> Share </v-btn>
-
-            <v-btn color="black" text> Explore </v-btn>
-          </v-card-actions>
-        </v-card>
       </v-row>
     </v-container>
     <v-row style="margin-top: 40px"></v-row>
@@ -265,7 +235,7 @@
               max-height="130"
               max-width="250"
             />
-            <p style="color=black">
+            <p style="color=black,">
               El SBSENA. Está conformado por el Equipo de
               Gestión, quienes tienen a su cargo la formulación y gestión de
               proyectos, la implementación y sostenibilidad del Proyecto
@@ -309,13 +279,13 @@
           <v-col class="text-center mb-md-0 mb-4" md="2" lg="3" xl="3">
            <v-row style="margin-top: 75px"></v-row>
             <h6 class="text-uppercase fw-bold mb-4">Contact</h6>
-            <p><i class="fas fa-home me-3"></i> New York, NY 10012, US</p>
+            <p><i class="fas fa-home me-3"></i> Calle 24 con, Cra. 14, Montería, Córdoba</p>
             <p>
               <i class="fas fa-envelope me-3"></i>
               info@example.com
             </p>
-            <p><i class="fas fa-phone me-3"></i> + 01 234 567 88</p>
-            <p><i class="fas fa-print me-3"></i> + 01 234 567 89</p>
+            <p><i class="fas fa-phone me-3"></i>  (94) 7838050</p>
+           
           </v-col>
         </v-row>
       </v-container>
