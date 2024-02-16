@@ -42,3 +42,18 @@ new Vue({
   vuetify,
   render: h => h(App)
 }).$mount('#app')
+
+axios.interceptors.request.use(
+  config => {
+    if (store.getters.isAuthenticated) {
+      const token = store.state.token;
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  error => {
+    return Promise.reject(error);
+  }
+);
+
+export default axios;
